@@ -34,13 +34,13 @@ public class BaseService <M extends BaseEntity<?>, ID extends Serializable> {
 		  return baseRepository.findOne(id);
 	}
 	
-	 public Page<M> findAll(final int pageNumber, final int pageSize,final String name){
+	 public Page<M> findAll(final int pageNumber, final int pageSize,final String name,final String targerAttr){
          PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
          Specification<M> spec = new Specification<M>() {
               public Predicate toPredicate(Root<M> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
               Predicate predicate = cb.conjunction();
               if (name != null) {
-                   predicate.getExpressions().add(cb.like(root.get("name").as(String.class), "%"+name+"%"));
+                   predicate.getExpressions().add(cb.like(root.get(targerAttr).as(String.class), "%"+name+"%"));
               }
               return predicate;
               }

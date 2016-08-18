@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pzy.jcook.dto.json.ObjectResponse;
 import com.pzy.jcook.dto.json.Response;
@@ -24,12 +25,14 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 	
 	@Override
 	@RequestMapping("index")
+	@ResponseBody
 	public String index(Model model) {
 		return this.getBasePath()+"/index";
 	}
 
 	@Override
 	@RequestMapping("save")
+	@ResponseBody
 	public Response save(M m) {
 		baseService.save(m);
 		return new SuccessResponse();
@@ -37,6 +40,7 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 
 	@Override
 	@RequestMapping("update")
+	@ResponseBody
 	public Response update(M m) {
 		baseService.save(m);
 		return new SuccessResponse();
@@ -44,6 +48,7 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 
 	@Override
 	@RequestMapping("delete")
+	@ResponseBody
 	public Response delete(ID id) {
 		baseService.delete(id);
 		return new SuccessResponse();
@@ -51,10 +56,13 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 
 	@Override
 	@RequestMapping("list")
+	@ResponseBody
 	public Response list(Integer start, Integer length, String name) {
 		int pageNumber = (int) (start / length) + 1;
 		int pageSize = length;
-		Page<M> m = baseService.findAll(pageNumber, pageSize, name);
+		Page<M> m = baseService.findAll(pageNumber, pageSize, name,"username");
+		
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", m.getContent());
 		map.put("iTotalRecords", m.getTotalElements());
