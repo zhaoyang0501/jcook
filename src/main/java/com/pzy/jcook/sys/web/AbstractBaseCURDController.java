@@ -21,6 +21,15 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 	@Autowired
 	private BaseService<M, ID> baseService;
 	
+	
+	public BaseService<M, ID> getBaseService() {
+		return baseService;
+	}
+
+	public void setBaseService(BaseService<M, ID> baseService) {
+		this.baseService = baseService;
+	}
+
 	abstract String getBasePath();
 	
 	@Override
@@ -63,7 +72,7 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", m.getContent());
+		map.put("aaData", m.getContent());
 		map.put("iTotalRecords", m.getTotalElements());
 		map.put("iTotalDisplayRecords", m.getTotalElements());
 		return new ObjectResponse<Map<String,Object>>(map);
