@@ -45,10 +45,10 @@
                 </div>
             </div>
             <div class="col-sm-5">
-                <form method="post" action="gologin">
+                <form method="post" action="login">
                     <h4 class="no-margins">登录：</h4>
                     <p class="m-t-md">世纪保险经纪公司核心业务系统</p>
-                    <input type="text" name='userName' class="form-control uname" placeholder="用户名" />
+                    <input type="text" name='username' class="form-control uname" placeholder="用户名" />
                     <input type="password" name='password' class="form-control pword m-b" placeholder="密码" />
                     <a href="">忘记密码了？</a>
                     <button class="btn btn-success btn-block">登录</button>

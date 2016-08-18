@@ -25,7 +25,6 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 	
 	@Override
 	@RequestMapping("index")
-	@ResponseBody
 	public String index(Model model) {
 		return this.getBasePath()+"/index";
 	}

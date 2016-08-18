@@ -55,7 +55,6 @@
                         </div>
                     </li>
                     
-                    <c:if test="${sessionScope.adminuser.role=='管理员' }">
                     <li>
                         <a href="#">
                             <i class="fa fa fa-bar-chart-o"></i>
@@ -104,50 +103,7 @@
                             </li>
                         </ul>
                     </li>
- 						</c:if>
  				
- 				
- 				 <c:if test="${sessionScope.adminuser.role=='组长' }">
-					<li>
-                        <a href="#">
-                            <i class="fa fa fa-bar-chart-o"></i>
-                            <span class="nav-label">审计项目</span>
-                            <span class="fa arrow"></span>
-                        </a>
-                        <ul class="nav nav-second-level">
-                           <li><a class="J_menuItem" href="project/index">我的项目</a>
-                            </li>
-                            <li><a class="J_menuItem" href="project/create">发布审计项目</a>
-                            </li>
-                            
-                             <li><a class="J_menuItem" href="project/taskindex">我的任务</a>
-                            </li>
-                            
-                            <li><a class="J_menuItem" href="project/projectend">提交完工报告</a>
-                            </li>
-                            
-                        </ul>
-                    </li>
- 						</c:if>
-					
-					<c:if test="${sessionScope.adminuser.role=='审计人员' }">
-					<li>
-                        <a href="#">
-                            <i class="fa fa fa-bar-chart-o"></i>
-                            <span class="nav-label">审计项目</span>
-                            <span class="fa arrow"></span>
-                        </a>
-                        <ul class="nav nav-second-level">
-                           <li><a class="J_menuItem" href="project/index">我的项目</a>
-                            </li>
-                             <li><a class="J_menuItem" href="project/taskindex">我的任务</a>
-                            </li>
-                            
-                          
-                            
-                        </ul>
-                    </li>
- 						</c:if>
                 </ul>
             </div>
         </nav>
