@@ -19,58 +19,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-/*
 public class MyRealm extends AuthorizingRealm {  
 	private static final Logger log = LoggerFactory.getLogger(AuthorizingRealm.class);
-	
-	*//**
-	 * 授权，每次进行权限检查，都需要调用此方法，已进行了缓存
-	 *//*
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String currentUsername = (String) super.getAvailablePrincipal(principals);
-		User u = userService.findByUsername(currentUsername);
-		List<String> roleList = new ArrayList<String>();
-		List<String> permissionList = new ArrayList<String>();
-		List<UserRole> userroles = userRoleService.queryUserRole(u.getId());
-		if(!CollectionUtils.isEmpty(userroles)){
-			for (UserRole role : userroles) {
-				roleList.add(role.getRolename());
-				List<RoleRights> roleRightss = roleRightsService.queryByRole(role.getRoleid());
-				for(RoleRights roleRights:roleRightss){
-					permissionList.add(rightsService.findOne(roleRights.getRightsId()).getName());
-				}
-			}
-		}
-		
-		SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
-		simpleAuthorInfo.addRoles(roleList);
-		simpleAuthorInfo.addStringPermissions(permissionList);
-		return simpleAuthorInfo;
+		return null;
 	} 
    
-       
-    *//** 
-     * 认证 
-     * 验证当前登录的Subject 
-		
-     *//*  
     @Override  
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws ShiroException {  
     	
-    	UsernamePasswordToken token = (UsernamePasswordToken)authcToken;  
-    	log.info("user{},password {}login",token.getUsername(),token.getPassword());
-        User user=userService.findByNo(token.getUsername());
-        if(user!=null){
-        	if(user.getFreeze()==1){
-        		throw new LockedAccountException();	
-        	 }
-        	 AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(), user.getChinesename());  
-        	 SecurityUtils.getSubject().getSession().setAttribute("currentUser", user);
-             return authcInfo;  
-        }else{
-        	  throw new UnknownAccountException();
-        }
+    	return null;
     }
-  
-}*/  
+}
