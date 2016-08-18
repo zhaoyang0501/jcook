@@ -5,5 +5,7 @@ import com.pzy.jcook.sys.entity.User;
 
 @Service
 public class UserService extends BaseService<User, Long> {
-
+	public void fuckyou(){
+		
+	}
 }
