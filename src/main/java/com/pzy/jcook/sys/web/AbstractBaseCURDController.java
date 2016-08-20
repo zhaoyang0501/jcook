@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pzy.jcook.dto.json.DataTableResponse;
 import com.pzy.jcook.dto.json.ObjectResponse;
 import com.pzy.jcook.dto.json.Response;
 import com.pzy.jcook.dto.json.SuccessResponse;
@@ -69,13 +70,12 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 		int pageNumber = (int) (start / length) + 1;
 		int pageSize = length;
 		Page<M> m = baseService.findAll(pageNumber, pageSize, name,"username");
-		
-		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("aaData", m.getContent());
-		map.put("iTotalRecords", m.getTotalElements());
-		map.put("iTotalDisplayRecords", m.getTotalElements());
-		return new ObjectResponse<Map<String,Object>>(map);
+		map.put("data", m.getContent());
+		map.put("recordsTotal", 122);
+		map.put("recordsFiltered",1212+ m.getTotalElements());
+		map.put("draw", 1);
+		return new DataTableResponse<M>( m.getContent(),(int) m.getTotalElements() );
 	}
 
 }

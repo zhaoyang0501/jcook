@@ -51,7 +51,7 @@
 									<th>电话</th>
 									<th>工作</th>
 									<th>角色</th>
-										<th>删除</th>
+									<th>删除</th>
 								</tr>
                             </thead>
                        		 <tbody>
@@ -83,13 +83,12 @@
         $(document).ready(function(){
         	<c:if test="${state=='success'}">
 	  		  toastr.success('${tip}');
-	    </c:if>
+	       </c:if>
         	var table=$('#dt_table_view').DataTable( {
 	            "ajax": {
 	                "url":  $.common.getContextPath() + "/user/list",
 	                "type": "POST",
-	                "dataSrc": "datas.aaData"
-	               
+	                "dataSrc": "datas"
 	              },
 				"columns" : [{
 					"data" : "id"
