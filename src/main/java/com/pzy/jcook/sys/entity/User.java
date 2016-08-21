@@ -15,8 +15,38 @@ public class User extends BaseEntity<Long>{
 	
 	private String salt;
 	
+	private String remark;
 	
+	private String tel;
 	
+	private String chinesename;
+	
+	private String sex;
+	
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public String getChinesename() {
+		return chinesename;
+	}
+	public void setChinesename(String chinesename) {
+		this.chinesename = chinesename;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 	public String getSalt() {
 		return salt;
 	}
