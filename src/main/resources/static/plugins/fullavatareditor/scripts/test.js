@@ -6,7 +6,7 @@ swfobject.addDomLoadEvent(function () {
 	var sourcePic2Url = $.Cookie('swf2');
 	if(sourcePic2Url == null)
 	{
-		sourcePic2Url = "http://www.baidu.com/img/bdlogo.png";
+		sourcePic2Url = "../../../../../../www.baidu.com/img/bdlogo.png"/*tpa=http://www.baidu.com/img/bdlogo.png*/;
 	}
     var callback = function (json) {
 		var id = this.id;
@@ -96,7 +96,7 @@ swfobject.addDomLoadEvent(function () {
     };
     var swf1 = new fullAvatarEditor('swf1', 335, {
 		id : 'swf1',
-        upload_url : 'upload.php',
+        upload_url : '../../../../../error/ie.html'/*tpa=http://www.zi-han.net/theme/hplus/plugins/fullavatareditor/scripts/upload.php*/,
 		src_url : sourcePic1Url,			//默认加载的原图片的url
         tab_visible : false,				//不显示选项卡，外部自定义
         button_visible : false,				//不显示按钮，外部自定义
@@ -221,7 +221,7 @@ swfobject.addDomLoadEvent(function () {
     //------------------------------------------------------------------------------示例二
     var swf2 = new fullAvatarEditor('swf2', {
         id: 'swf2',
-        upload_url: 'upload.php',	//上传图片的接口地址
+        upload_url: '../../../../../error/ie.html'/*tpa=http://www.zi-han.net/theme/hplus/plugins/fullavatareditor/scripts/upload.php*/,	//上传图片的接口地址
         src_url: sourcePic2Url,		//默认加载的原图片的url
         src_upload: 2,				//是否上传原图片的选项：2-显示复选框由用户选择，0-不上传，1-上传
 		avatar_scale:2,				//头像保存时的缩放系数

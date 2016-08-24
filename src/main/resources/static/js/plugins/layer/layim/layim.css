@@ -10,7 +10,7 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,input,button,textarea,p,blockquote,
 input,button,textarea,select,optgroup,option{font-family:inherit; font-size:inherit; font-style:inherit; font-weight:inherit; outline: 0;}
 li{list-style:none;}
 .xxim_icon, .xxim_main i, .layim_chatbox i{position:absolute;}
-.loading{background:url(loading.gif) no-repeat center center;}
+.loading{background:url(loading.gif)/*tpa=http://www.zi-han.net/theme/hplus/js/plugins/layer/layim/loading.gif*/ no-repeat center center;}
 .layim_chatbox a, .layim_chatbox a:hover{color:#343434; text-decoration:none; }
 .layim_zero{position:absolute; width:0; height:0; border-style:dashed; border-color:transparent; overflow:hidden;}
 

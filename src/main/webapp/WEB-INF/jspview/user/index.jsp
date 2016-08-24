@@ -192,7 +192,7 @@
     <script src="${pageContext.request.contextPath}/js/plugins/dataTables/dataTables.bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/common.js?v=1.0.0"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js?sf=1"></script>
     
     <script>
    	
@@ -202,8 +202,8 @@
         		layer.open({
         			  type: 1,
         			  skin: 'layui-layer-rim', //加上边框
-        			  content: $("#_form"),
-        			  area: "600px"
+        			  content: $("#_form")
+        			  
         			});
         	});
         	<c:if test="${state=='success'}">

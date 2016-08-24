@@ -1,14 +1,14 @@
 @font-face {
   font-family: 'footable';
-  src: url('fonts/footable.eot');
-  src: url('fonts/footable.eot?#iefix') format('embedded-opentype'), url('fonts/footable.woff') format('woff'), url('fonts/footable.ttf') format('truetype'), url('fonts/footable.svg#footable') format('svg');
+  src: url('fonts/footable.eot')/*tpa=http://www.zi-han.net/theme/hplus/css/plugins/footable/fonts/footable.eot*/;
+  src: url('fonts/footable.eot-#iefix')/*tpa=http://www.zi-han.net/theme/hplus/css/plugins/footable/fonts/footable.eot?#iefix*/ format('embedded-opentype'), url('fonts/footable.woff')/*tpa=http://www.zi-han.net/theme/hplus/css/plugins/footable/fonts/footable.woff*/ format('woff'), url('fonts/footable.ttf')/*tpa=http://www.zi-han.net/theme/hplus/css/plugins/footable/fonts/footable.ttf*/ format('truetype'), url('fonts/footable.svg#footable')/*tpa=http://www.zi-han.net/theme/hplus/css/plugins/footable/fonts/footable.svg#footable*/ format('svg');
   font-weight: normal;
   font-style: normal;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   @font-face {
     font-family: 'footable';
-    src: url('fonts/footable.svg#footable') format('svg');
+    src: url('fonts/footable.svg#footable')/*tpa=http://www.zi-han.net/theme/hplus/css/plugins/footable/fonts/footable.svg#footable*/ format('svg');
     font-weight: normal;
     font-style: normal;
   }

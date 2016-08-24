@@ -61,7 +61,7 @@
 .gritter-item-wrapper {
 	position:relative;
 	margin:0 0 10px 0;
-	background:url('images/ie-spacer.gif'); /* ie7/8 fix */
+	background:url('images/ie-spacer.gif')/*tpa=http://www.zi-han.net/theme/hplus/js/plugins/gritter/images/ie-spacer.gif*/; /* ie7/8 fix */
 }
 
 .hover .gritter-top {
@@ -99,7 +99,7 @@
 	position:absolute;
 	top:5px;
 	right:3px;
-	background:url(images/gritter.png) no-repeat left top;
+	background:url(images/gritter.png)/*tpa=http://www.zi-han.net/theme/hplus/js/plugins/gritter/images/gritter.png*/ no-repeat left top;
 	cursor:pointer;
 	width:30px;
 	height:30px;
@@ -130,7 +130,7 @@
 .gritter-light .gritter-bottom,
 .gritter-light .gritter-top,
 .gritter-light .gritter-close {
-    background-image: url(images/gritter-light.png);
+    background-image: url(images/gritter-light.png)/*tpa=http://www.zi-han.net/theme/hplus/js/plugins/gritter/images/gritter-light.png*/;
     color: #222;
 }
 .gritter-light .gritter-title {
