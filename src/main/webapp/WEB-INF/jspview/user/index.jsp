@@ -47,16 +47,15 @@
                             <thead>
                                 <tr>
 									<th>id</th>
-									<th>用户名</th>
+									<th>手机号码</th>
 									<th>真实姓名</th>
-									<th>电话</th>
-									<th>电子邮件</th>
 									<th>性别</th>
-									<th>备注</th>
-									<th>删除</th>
+									<th>备用电话</th>
+									<th>电子邮件</th>
+									<th>责任区域</th>
+									<th>操作</th>
 								</tr>
                             </thead>
-                       		 
                        		 <tbody>
                             </tbody>
                           </table>
@@ -68,19 +67,19 @@
         
         
    </div>
-   <div id='_form'>
+   <div id='_form' style="display: none;">
        <div class="ibox-content">
-  <div class="row">
+ 		 <div class="row">
                             <div class="col-sm-12 b-r">
-		                           <form class="form-horizontal" action="${pageContext.request.contextPath}/admin/user/create" method="post">
+		                           <form class="form-horizontal" action="" method="get">
 		                           	<table class='table table-bordered'>
 		                           		<thead>
-		                           		<tr style="text-align: center;" ><td colspan="6" ><h3>审计人员信息登记表<h3></h3></td></tr>
+		                           		<tr style="text-align: center;" ><td colspan="6" ><h3>员工信息<h3></h3></td></tr>
 		                           		</thead>
 		                           		<tbody>
 		                           			<tr>
 		                           				<td>姓名</td>
-		                           				<td> <input name='name' type="text" class="form-control"></td>
+		                           				<td> <input name='chinesename' type="text" class="form-control"></td>
 		                           			</tr>
 		                           			
 		                           			<tr>
@@ -97,20 +96,14 @@
 		                           				</td>
 		                           			</tr>
 		                           			
-		                           			<tr>	
-		                           				<td>出生日期</td>
-		                           				<td> 
-							                        <input name='birthDay' type="text" class="form-control input-group date" >
-		                           				</td>
-		                           			</tr>
 		                           				
 		                           			<tr>
-		                           				<td>工号</td>
+		                           				<td>手机号码</td>
 		                           				<td> <input name='username' type="text" class="form-control"></td>
 		                           			</tr>
 		                           			
 		                           			<tr>
-		                           				<td>电话</td>
+		                           				<td>备用号码</td>
 		                           				<td> <input name='tel' type="text" class="form-control"></td>
 		                           			</tr>
 		                           			
@@ -119,23 +112,10 @@
 		                           				<td>email</td>
 		                           				<td> <input name='email'  type="text" class="form-control"></td>
 		                           			</tr>
-		                           			<tr>
-		                           				<td>家庭地址</td>
-		                           				<td> <input name='address' type="text" class="form-control"></td>
-		                           				</tr>
-		                           			<tr>
-		                           				<td>工作单位</td>
-		                           				<td> 
-			                           				<input name='job' type="text" class="form-control">
-												</td>
-												</tr>
-		                           			<tr>
-												<td>政治面貌</td>
-		                           				<td> <select name='party' class="form-control">
-		                           						<option value='群众'>群众</option>
-		                           						<option value='党员积极分子'>党员积极分子</option>
-		                           						<option value='党员'>党员</option>
-		                           					</select></td>
+		                           			
+											<tr>
+												<td>责任范围</td>
+		                           				<td> <textarea name='remark' rows="4" cols="" style="width: 80%"></textarea></td>
 		                           			</tr>
 		                           			
 		                           			
@@ -150,25 +130,20 @@
 												</td>
 		                           			</tr>
 		                           			
-		                           			<tr>
-		                           				<td>备注</td>
-		                           				<td> 
-		                           					<textarea name='remark' rows="4" cols="" style="width: 80%"></textarea>
-		                           				</td>
-		                           			</tr>
+		                           		
 		                           			<tr>
 		                           				<td>提示</td>
 		                           				<td > 
 		                           					 <h4>提示</h4>
 		                               					 <ol>
-									    					<li>新员工必须先登记</li>
+									    					<li>初始密码为123456，登记完成可以修改</li>
 									    				</ol>
 		                           				</td>
 		                           			</tr>
 		                           			<tr>
 		                           				<td colspan="6"> 
 		                           					 <div class="col-sm-4 col-sm-offset-2">
-		                                  			  		<button class="btn btn-primary" type="submit">提交</button>
+		                                  			  		<button class="btn btn-primary" type="button" onclick="submit_form()">提交</button>
 		                                   				    <button class="btn btn-white" type="submit">取消</button>
 		                               				 </div>
 		                           				</td>
@@ -197,19 +172,48 @@
     <script>
    	
     $.common.setContextPath('${pageContext.request.contextPath}');
+    var table=null;
+    function submit_form(){
+    	$.ajax({
+    		   type: "POST",
+    		   url:  $.common.getContextPath() + "/user/save",
+    		   data: $("form").serialize(),
+    		   success: function(msg){
+    		     if(msg.code==1){
+    		    	 toastr.success('操作成功');
+    		    	 table.draw();
+    		     }
+    		     layer.closeAll() ;
+    		   }
+    		});
+     }
+    
+    function fun_delete(id){
+    	$.ajax({
+ 		   url:  $.common.getContextPath() + "/user/delete?id="+id,
+ 		   success: function(msg){
+ 		     if(msg.code==1){
+ 		    	 toastr.success('操作成功');
+ 		    	 table.draw();
+ 		     }
+ 		     layer.closeAll() ;
+ 		   }
+ 		});
+    }
+    
         $(document).ready(function(){
         	$("#_new").click(function(){
         		layer.open({
         			  type: 1,
         			  skin: 'layui-layer-rim', //加上边框
-        			  content: $("#_form")
-        			  
+        			  content: $("#_form"),
+        			  area: "800px"
         			});
         	});
         	<c:if test="${state=='success'}">
 	  		  toastr.success('${tip}');
 	       </c:if>
-        	var table=$('#dt_table_view').DataTable( {
+        	table=$('#dt_table_view').DataTable( {
 	            "ajax": {
 	                "url":  $.common.getContextPath() + "/user/list",
 	                "type": "POST",
@@ -222,11 +226,11 @@
 				},{
 					"data" : "chinesename",
 				},{
+					"data" : "sex",
+				},{
 					"data" : "tel",
 				},{
 					"data" : "email",
-				},{
-					"data" : "sex",
 				},{
 					"data" : "remark",
 				},{
@@ -235,9 +239,9 @@
 				 "columnDefs": [
 				                {
 				                    "render": function ( data, type, row ) {
-				                        return "<a tager='_blank' href='delete?id="+data+"'>删除</a>";
+				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>";
 				                    },
-				                    "targets":8
+				                    "targets":7
 				                }
 				               
 				            ],
