@@ -62,7 +62,12 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 		baseService.delete(id);
 		return new SuccessResponse();
 	}
-
+	@Override
+	@RequestMapping("get")
+	@ResponseBody
+	public Response get(ID id) {
+		return new ObjectResponse<M>(baseService.find(id));
+	}
 	@Override
 	@RequestMapping("list")
 	@ResponseBody

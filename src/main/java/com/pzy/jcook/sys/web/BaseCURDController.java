@@ -16,5 +16,7 @@ public interface BaseCURDController<M extends BaseEntity<?>, ID>  {
 	
 	public Response delete(ID id);
 	
+	public Response get(ID id);
+	
 	public Response list(Integer start, Integer length, String name);
 }

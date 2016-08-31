@@ -62,9 +62,8 @@
                      <li>
                         <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">人员管理 </span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="user/index">员工查询</a>
-                             <li><a class="J_menuItem" href="user/create">员工登记</a>
-                            </li>
+                            <li><a class="J_menuItem" href="user/index">员工管理</a</li>
+                              <li><a class="J_menuItem" href="workitem/create">上传任务</a</li>
                         </ul>
                     </li>
                 </ul>

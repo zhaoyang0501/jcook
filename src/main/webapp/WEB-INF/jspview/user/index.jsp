@@ -72,6 +72,7 @@
  		 <div class="row">
                             <div class="col-sm-12 b-r">
 		                           <form class="form-horizontal" action="" method="get">
+		                           <input name='id' type="hidden"/>
 		                           	<table class='table table-bordered'>
 		                           		<thead>
 		                           		<tr style="text-align: center;" ><td colspan="6" ><h3>员工信息<h3></h3></td></tr>
@@ -168,11 +169,14 @@
     <script src="${pageContext.request.contextPath}/js/common.js?v=1.0.0"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js?sf=1"></script>
-    
     <script>
-   	
+    <c:if test="${state=='success'}">
+	  toastr.success('${tip}');
+	 </c:if>
     $.common.setContextPath('${pageContext.request.contextPath}');
+    
     var table=null;
+    
     function submit_form(){
     	$.ajax({
     		   type: "POST",
@@ -199,10 +203,40 @@
  		     layer.closeAll() ;
  		   }
  		});
-    }
+     }
     
-        $(document).ready(function(){
+    function fun_update(id){
+    	$.ajax({
+ 		   url:  $.common.getContextPath() + "/user/get?id="+id,
+ 		   success: function(msg){
+ 		     if(msg.code==1){
+ 		    	$("input[name='id']").val(msg.datas.id);
+ 		    	$("input[name='chinesename']").val(msg.datas.chinesename);
+ 		    	$("radio[name='sex']").val(msg.datas.sex);
+ 		   		$("input[name='username']").val(msg.datas.username);
+ 				$("input[name='tel']").val(msg.datas.tel);
+ 				$("input[name='email']").val(msg.datas.email);
+ 				$("textarea[name='remark']").val(msg.datas.remark);
+ 		    	layer.open({
+      			  type: 1,
+      			  skin: 'layui-layer-rim', 
+      			  content: $("#_form"),
+      			  area: "800px"
+      			});
+ 		     }
+ 		   }
+ 		});
+     }
+    
+    $(document).ready(function(){
         	$("#_new").click(function(){
+        		$("input[name='id']").val("");
+ 		    	$("input[name='chinesename']").val("");
+ 		    	$("radio[name='sex']").val("");
+ 		   		$("input[name='username']").val("");
+ 				$("input[name='tel']").val("");
+ 				$("input[name='email']").val("");
+ 				$("textarea[name='remark']").val("");
         		layer.open({
         			  type: 1,
         			  skin: 'layui-layer-rim', //加上边框
@@ -210,9 +244,6 @@
         			  area: "800px"
         			});
         	});
-        	<c:if test="${state=='success'}">
-	  		  toastr.success('${tip}');
-	       </c:if>
         	table=$('#dt_table_view').DataTable( {
 	            "ajax": {
 	                "url":  $.common.getContextPath() + "/user/list",
@@ -239,7 +270,8 @@
 				 "columnDefs": [
 				                {
 				                    "render": function ( data, type, row ) {
-				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>";
+				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>"+
+				                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>编辑 </a>";
 				                    },
 				                    "targets":7
 				                }
@@ -250,8 +282,6 @@
         			$("#_search").on("click", function(){
             		 	api.draw();
         			} );
-        			
-        			
         		} 
         	 } ).on('preXhr.dt', function ( e, settings, data ) {
 		        	data.name = $("#_name").val();
@@ -259,7 +289,6 @@
 		     } ).on('xhr.dt', function ( e, settings, json, xhr ) {
 		    		 $(".dataTables_processing").hide();	
 		     } )
-			
         });
     </script>
 </body>
