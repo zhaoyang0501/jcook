@@ -11,20 +11,11 @@
 			<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 			<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 			<shiro.version>1.2.4</shiro.version>
+			<activiti.version>5.19.0.2</activiti.version>
 	</properties>
 	
 	<repositories>
-        <repository>
-            <id>aliyun-repos</id>
-            <name>Java Repository</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-        </repository>
         
-   		 <repository>
-            <id>oschina-repos</id>
-            <name>Oschina Releases</name>
-            <url>http://maven.oschina.net/content/groups/public</url>
-        </repository>
 	</repositories>
 	
 	<parent>
@@ -45,6 +36,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		
+		<!-- activit  -->
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-spring-boot-starter-basic</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<!-- activit  -->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -59,10 +59,15 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
+		<!-- test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
 		</dependency>
 		
 		<dependency>
