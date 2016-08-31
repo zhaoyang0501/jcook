@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableJpaRepositories("com.pzy.jcook.sys.repository")
-@ImportResource( {"spring/applicationContext-shiro.xml"} ) 
+@ImportResource( {"classpath:spring/applicationContext-shiro.xml"} ) 
 public class SpringBootContext extends SpringBootServletInitializer {
 
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
