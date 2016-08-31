@@ -73,7 +73,7 @@ public class WorkFlowService {
 			ActivitDTO dto=new ActivitDTO();
 			dto.setSn((String)processEngine.getTaskService().getVariable(task.getId(), "sn"));
 			dto.setTitle((String)processEngine.getTaskService().getVariable(task.getId(), "title"));
-			User user=userRepository.findOne((Long)processEngine.getTaskService().getVariable(task.getId(), "creater"));
+			User user=userRepository.findOne(1l);
 			dto.setCreater(user);
 			dto.setCreateDate(task.getCreateTime());
 			dto.setStepName(task.getName());

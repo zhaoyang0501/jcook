@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@EnableJpaRepositories("com.pzy.jcook.sys.repository")
+@EnableJpaRepositories({"com.pzy.jcook.sys.repository","com.pzy.jcook.workflow.repository"})
 @ImportResource( {"classpath:spring/applicationContext-shiro.xml"} ) 
 public class SpringBootContext extends SpringBootServletInitializer {
 

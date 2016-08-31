@@ -64,6 +64,7 @@
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="user/index">员工管理</a</li>
                               <li><a class="J_menuItem" href="workitem/create">上传任务</a</li>
+                                <li><a class="J_menuItem" href="workflow/tasktodo">上传任务</a</li>
                         </ul>
                     </li>
                 </ul>
