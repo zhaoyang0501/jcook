@@ -19,7 +19,7 @@
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/animate.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/style.min.css?v=4.1.1" rel="stylesheet"></head>
+    <link href="${pageContext.request.contextPath}/css/style.min.css?v=4.1.0" rel="stylesheet"></head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
     <div id="wrapper">
@@ -60,7 +60,7 @@
                             <li><a class="J_menuItem" href="user/index">员工管理</a</li>
                               <li><a class="J_menuItem" href="workitem/create">上传任务</a</li>
                                 <li><a class="J_menuItem" href="${pageContext.request.contextPath}/workflow/tasktodo">我的代办</a</li>
-                                 <li><a class="J_menuItem" href="workflow/tasktodo">我的已办</a</li>
+                                 <li><a class="J_menuItem" href="workflow/taskdone">我的已办</a</li>
                                    <li><a class="J_menuItem" href="workflow/tasktodo">任务监控</a</li>
                         </ul>
                     </li>
@@ -70,6 +70,58 @@
         <!--左侧导航结束-->
         <!--右侧部分开始-->
         <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" method="post" action="http://www.zi-han.net/theme/hplus/search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                     
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="mailbox.html" tppabs="http://www.zi-han.net/theme/hplus/mailbox.html">
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
+                                            <span class="pull-right text-muted small">4分钟前</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="profile.html" tppabs="http://www.zi-han.net/theme/hplus/profile.html">
+                                        <div>
+                                            <i class="fa fa-qq fa-fw"></i> 3条新回复
+                                            <span class="pull-right text-muted small">12分钟钱</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a class="J_menuItem" href="notifications.html" tppabs="http://www.zi-han.net/theme/hplus/notifications.html">
+                                            <strong>查看所有 </strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown hidden-xs">
+                            <a class="right-sidebar-toggle" aria-expanded="false">
+                                <i class="fa fa-tasks"></i> 主题
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
             <div class="row content-tabs">
                 <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
                 </button>
@@ -94,7 +146,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="login.html" tppabs="${pageContext.request.contextPath}/loginout" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+                <a href="login.html" tppabs="http://www.zi-han.net/theme/hplus/login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
                 <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="${pageContext.request.contextPath}/workflow/tasktodo"" tppabs="${pageContext.request.contextPath}/workflow/tasktodo"" frameborder="0" data-id="tasktodo" seamless></iframe>

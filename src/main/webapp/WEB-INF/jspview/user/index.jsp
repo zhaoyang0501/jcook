@@ -42,8 +42,8 @@
                         </form>
                     </div>
                     
-                    <div class="ibox-content">
-                         <table ID='dt_table_view' class="table table-striped table-bordered table-hover dataTables-example">
+                    <div class="ibox-content ">
+                         <table ID='dt_table_view' class="table table-striped table-bordered table-hover ">
                             <thead>
                                 <tr>
 									<th>id</th>
@@ -150,7 +150,7 @@
 		                           				</td>
 		                           			</tr>
 		                           		</tbody>
-		                           	</table> 
+		                           	</table>
 		                           	</form>
                             </div>
                         </div>

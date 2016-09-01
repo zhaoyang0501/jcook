@@ -1,9 +1,12 @@
 package com.pzy.jcook.workflow.web;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -11,8 +14,11 @@ import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -35,7 +41,13 @@ public class WorkitemController {
 	@Autowired
 	private ProcessEngine processEngine;
 
-	@RequestMapping(method=RequestMethod.GET)
+	@InitBinder  
+	protected void initBinder(HttpServletRequest request,  
+	            ServletRequestDataBinder binder) throws Exception {   
+	      binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));  
+	}  
+	
+	@RequestMapping(value="create",method=RequestMethod.GET)
 	public String create(Model model) {
 		return  "workitem/create";
 	}
@@ -46,7 +58,7 @@ public class WorkitemController {
 	 * @param workitem
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(value="create",method=RequestMethod.POST)
 	public String create(Model model,Workitem workitem) {
 		User user=(User)SecurityUtils.getSubject().getSession().getAttribute("currentUser");
 		workitem.setCreater(user);
@@ -66,7 +78,7 @@ public class WorkitemController {
 		processEngine.getTaskService().complete(tasks.get(0).getId(),activtiMap);
 		
 		model.addAttribute("response",new SuccessResponse("单据提交成功！"));
-		return  "workflow/create";
+		return  "workitem/create";
 	}
 	
 	

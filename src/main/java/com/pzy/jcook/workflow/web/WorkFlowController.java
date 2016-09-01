@@ -1,8 +1,6 @@
 package com.pzy.jcook.workflow.web;
 
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,10 +26,15 @@ public class WorkFlowController {
 	WorkFlowService workFlowService;
 
 	@RequestMapping("tasktodo")
-	public String index(Model model) {
+	public String tasktodo(Model model) {
 		return  "workflow/tasktodo";
 	}
 
+	@RequestMapping("taskdone")
+	public String taskdone(Model model) {
+		return  "workflow/taskdone";
+	}
+	
 	@RequestMapping("tasktodolist")
 	@ResponseBody
 	public Response tasktodolist(Integer start, Integer length, String name) throws ParseException {
