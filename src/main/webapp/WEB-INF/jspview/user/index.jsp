@@ -123,11 +123,11 @@
 		                           			<tr>
 		                           				<td>角色</td>
 		                           				<td > 
-			                           				<select name='role' class="form-control">
-		                           						<option value='审计人员'>审计人员</option>
-		                           						<option value='组长'>组长</option>
-		                           						<option value='管理员'>管理员</option>
-		                           					</select>
+		                           				<c:forEach items="${roles }" var="bean">
+		                           				  <label class='checkbox-inline'>
+														<input type="checkbox" name="role" value="${bean.id }"> ${bean.name }
+												</label>
+		                           				</c:forEach>
 												</td>
 		                           			</tr>
 		                           			
@@ -193,16 +193,25 @@
      }
     
     function fun_delete(id){
-    	$.ajax({
- 		   url:  $.common.getContextPath() + "/user/delete?id="+id,
- 		   success: function(msg){
- 		     if(msg.code==1){
- 		    	 toastr.success('操作成功');
- 		    	 table.draw();
- 		     }
- 		     layer.closeAll() ;
- 		   }
- 		});
+    	
+    	layer.confirm('确定删除当前员工？', {
+    		  btn: ['确定','取消'] //按钮
+    		}, function(){
+    			$.ajax({
+    		 		   url:  $.common.getContextPath() + "/user/delete?id="+id,
+    		 		   success: function(msg){
+    		 		     if(msg.code==1){
+    		 		    	 toastr.success('操作成功');
+    		 		    	 table.draw();
+    		 		     }
+    		 		     layer.closeAll() ;
+    		 		   }
+    		 	});
+    		}, function(){
+    			 layer.closeAll() ;
+    		});
+    	
+    	
      }
     
     function fun_update(id){
@@ -217,6 +226,11 @@
  				$("input[name='tel']").val(msg.datas.tel);
  				$("input[name='email']").val(msg.datas.email);
  				$("textarea[name='remark']").val(msg.datas.remark);
+ 				$("input:checkbox[name='role']").prop('checked',false); 
+ 				for(var i=0;i<msg.datas.roles.length;i++){
+ 					$("input:checkbox[value='"+msg.datas.roles[i].id+"']").prop('checked',true); 
+ 				}
+ 				
  		    	layer.open({
       			  type: 1,
       			  skin: 'layui-layer-rim', 

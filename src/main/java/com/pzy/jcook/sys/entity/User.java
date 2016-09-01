@@ -1,11 +1,8 @@
 package com.pzy.jcook.sys.entity;
 
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -13,6 +10,7 @@ import javax.persistence.Table;
 @Table(name = "t_users")
 public class User extends BaseEntity<Long>{
 	
+	public static final String DEFAULT_PASSWORD="123456";
 	private String username;
 	
 	private String password;

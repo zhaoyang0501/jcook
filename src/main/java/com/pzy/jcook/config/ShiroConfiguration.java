@@ -101,11 +101,11 @@ public class ShiroConfiguration {
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
 	    return new LifecycleBeanPostProcessor();
 	}
-	@Bean
+	/*@Bean
 	  public ServletRegistrationBean servletRegistrationBean() {
 		 DispatcherServlet dispatcherServlet =  new DispatcherServlet();
 		 dispatcherServlet.setContextConfigLocation("classpath:spring/applicationContext-activitrest.xml");
 	    return new ServletRegistrationBean(new DispatcherServlet(), "/service/*");
-	  }
+	  }*/
 	
 }
