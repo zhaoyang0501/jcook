@@ -15,7 +15,11 @@ import com.pzy.jcook.dto.json.DataTableResponse;
 import com.pzy.jcook.dto.json.Response;
 import com.pzy.jcook.workflow.dto.ActivitDTO;
 import com.pzy.jcook.workflow.service.WorkFlowService;
-
+/***
+ * 代办已办 签收 等动作
+ * @author panchaoyang
+ *
+ */
 @Controller
 @RequestMapping("workflow")
 public class WorkFlowController {
@@ -28,16 +32,17 @@ public class WorkFlowController {
 		return  "workflow/tasktodo";
 	}
 
-	
 	@RequestMapping("tasktodolist")
 	@ResponseBody
-	public Response list(Integer start, Integer length, String name) throws ParseException {
+	public Response tasktodolist(Integer start, Integer length, String name) throws ParseException {
 		Page<ActivitDTO> m = workFlowService.findTaskTodo(null, null, null, null, null, null, 1l, start, length);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", m.getContent());
-		map.put("recordsTotal", m.getNumber());
-		map.put("recordsFiltered",m.getNumber());
-		map.put("draw", 1);
+		return new DataTableResponse<ActivitDTO>( m.getContent(),(int) m.getTotalElements() );
+	}
+	
+	@RequestMapping("taskdonelist")
+	@ResponseBody
+	public Response taskdonelist(Integer start, Integer length, String name) throws ParseException {
+		Page<ActivitDTO> m = workFlowService.findTaskdone(null,null, null, null, null, null, null, 1l, start, length);
 		return new DataTableResponse<ActivitDTO>( m.getContent(),(int) m.getTotalElements() );
 	}
 }

@@ -20,8 +20,10 @@ import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.Cookie;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import com.pzy.jcook.sys.shiro.CustomCredentialsMatcher;
 import com.pzy.jcook.sys.shiro.MyRealm;
@@ -99,4 +101,11 @@ public class ShiroConfiguration {
 	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
 	    return new LifecycleBeanPostProcessor();
 	}
+	@Bean
+	  public ServletRegistrationBean servletRegistrationBean() {
+		 DispatcherServlet dispatcherServlet =  new DispatcherServlet();
+		 dispatcherServlet.setContextConfigLocation("classpath:spring/applicationContext-activitrest.xml");
+	    return new ServletRegistrationBean(new DispatcherServlet(), "/service/*");
+	  }
+	
 }

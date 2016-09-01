@@ -11,11 +11,15 @@
 			<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 			<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 			<shiro.version>1.2.4</shiro.version>
-			<activiti.version>5.19.0.2</activiti.version>
+			 <activiti.version>5.20.0</activiti.version>
 	</properties>
 	
 	<repositories>
-        
+         <repository> 
+           <id>nexus</id> 
+           <name>local private nexus</name> 
+           <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+       </repository> 
 	</repositories>
 	
 	<parent>
@@ -43,6 +47,27 @@
 			<artifactId>activiti-spring-boot-starter-basic</artifactId>
 			<version>${activiti.version}</version>
 		</dependency>
+		
+		<dependency>
+		     <groupId>org.activiti</groupId>
+    		 <artifactId>activiti-spring-boot-starter-rest-api</artifactId>
+   			<version>${activiti.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-modeler</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+
+		
+
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-diagram-rest</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		
 		<!-- activit  -->
 		
 		<dependency>

@@ -1,6 +1,12 @@
 package com.pzy.jcook.sys.entity;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +29,15 @@ public class User extends BaseEntity<Long>{
 	
 	private String sex;
 	
+	@OneToMany
+	private Set<Role> roles;
+	
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 	public String getRemark() {
 		return remark;
 	}
