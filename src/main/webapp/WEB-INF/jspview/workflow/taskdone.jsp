@@ -34,8 +34,8 @@
                     <div class="ibox-content">
                         <form role="form" class="form-inline">
                             <div class="form-group">
-                                <label for="exampleInputEmail2" class="sr-only">任务主题</label>
-                                <input type="text" placeholder="员工工号" id="_name" class="form-control">
+                                <label for="exampleInputEmail2" class="sr-only">事项名称</label>
+                                <input type="text" placeholder="事项名称 "  id="_name" class="form-control">
                             </div>
                             <button class="btn btn-primary" type="button" id='_search'>查询</button>
                         </form>
@@ -175,8 +175,8 @@
 				 "columnDefs": [
 				                {
 				                    "render": function ( data, type, row ) {
-				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>签收 </a>"+
-				                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>处理</a>";
+				                    	  return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>查看详情 </a>";
+						                    
 				                    },
 				                    "targets":5
 				                }

@@ -15,6 +15,9 @@
     <link href="${pageContext.request.contextPath}/css/style.min.css?v=4.1.0" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <style type="text/css">
+    
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -38,24 +41,24 @@
 		                           		<tbody>
 		                           			<tr>
 		                           				<td>标题</td>
-		                           				<td> <input required="required" name='title' type="text" class="form-control"></td>
+		                           				<td> <input required="required" name='title' type="text" class="form-control">	<span class="needtip">*</span></td>
 		                           			</tr>
 		                           			<tr>
 		                           				<td>任务描述</td>
-		                           				<td> <textarea name='remark' rows="4" cols="" style="width: 100%" ></textarea></td>
+		                           				<td> <textarea required="required" name='remark' rows="4" cols="" style="width: 100%" ></textarea></td>
 		                           			</tr>
 		                           			
 		                           			<tr>	
 		                           				<td>任务开展日期</td>
 		                           				<td> 
-							                        <input name='beginDate' type="text" class="form-control input-group date" >
+							                        <input required="required" name='beginDate' type="text" class="form-control input-group date" >
 		                           				</td>
 		                           			</tr>
 		                           				
 		                           			<tr>	
 		                           				<td>限期完成</td>
 		                           				<td> 
-							                        <input name='endDate' type="text" class="form-control input-group date" >
+							                        <input required="required"  name='endDate' type="text" class="form-control input-group date" >
 		                           				</td>
 		                           			</tr>
 		                           			<tr>	
@@ -109,8 +112,7 @@
 		
 		
         $(document).ready(function(){
-        	init_xzqhsq();
-        	$(".input-group.date").datepicker({
+        	$(".date").datepicker({
         		language:  'zh-CN',
     	        weekStart: 1,
     	        todayBtn:  1,

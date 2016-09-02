@@ -71,15 +71,10 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 	@Override
 	@RequestMapping("list")
 	@ResponseBody
-	public Response list(Integer start, Integer length, String name) {
+	public Response list(Integer start, Integer length, String value,String columnname) {
 		int pageNumber = (int) (start / length) + 1;
 		int pageSize = length;
-		Page<M> m = baseService.findAll(pageNumber, pageSize, name,"username");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", m.getContent());
-		map.put("recordsTotal", 122);
-		map.put("recordsFiltered",1212+ m.getTotalElements());
-		map.put("draw", 1);
+		Page<M> m = baseService.findAll(pageNumber, pageSize, value,columnname);
 		return new DataTableResponse<M>( m.getContent(),(int) m.getTotalElements() );
 	}
 

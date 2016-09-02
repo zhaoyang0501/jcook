@@ -18,5 +18,5 @@ public interface BaseCURDController<M extends BaseEntity<?>, ID>  {
 	
 	public Response get(ID id);
 	
-	public Response list(Integer start, Integer length, String name);
+	public Response list(Integer start, Integer length, String value,String columnname);
 }
