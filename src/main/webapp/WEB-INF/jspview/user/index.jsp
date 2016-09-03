@@ -21,6 +21,73 @@
 </head>
 <body >
     <div class="wrapper wrapper-content animated fadeInRight">
+       
+        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+
+                                        <th></th>
+                                        <th>项目</th>
+                                        <th>进度</th>
+                                        <th>任务</th>
+                                        <th>日期</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" checked class="i-checks" name="input[]">
+                                        </td>
+                                        <td>米莫说｜MiMO Show</td>
+                                        <td><span class="pie">0.52/1.561</span>
+                                        </td>
+                                        <td>20%</td>
+                                        <td>2014.11.11</td>
+                                        <td><a href="table_basic.html#"><i class="fa fa-check text-navy"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="i-checks" name="input[]">
+                                        </td>
+                                        <td>商家与购物用户的交互试衣应用</td>
+                                        <td><span class="pie">6,9</span>
+                                        </td>
+                                        <td>40%</td>
+                                        <td>2014.11.11</td>
+                                        <td><a href="table_basic.html#"><i class="fa fa-check text-navy"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="i-checks" name="input[]">
+                                        </td>
+                                        <td>天狼---智能硬件项目</td>
+                                        <td><span class="pie">3,1</span>
+                                        </td>
+                                        <td>75%</td>
+                                        <td>2014.11.11</td>
+                                        <td><a href="table_basic.html#"><i class="fa fa-check text-navy"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="i-checks" name="input[]">
+                                        </td>
+                                        <td>线下超市+线上商城+物流配送互联系统</td>
+                                        <td><span class="pie">4,9</span>
+                                        </td>
+                                        <td>18%</td>
+                                        <td>2014.11.11</td>
+                                        <td><a href="table_basic.html#"><i class="fa fa-check text-navy"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+       
        <div class="row">
             <div class="col-sm-12">
                 <div class="ibox ">
@@ -43,6 +110,7 @@
                     </div>
                     
                     <div class="ibox-content ">
+                       <div class="table-responsive" style="overflow: scroll;">
                          <table ID='dt_table_view' class="table table-striped table-bordered table-hover ">
                             <thead>
                                 <tr>
@@ -59,6 +127,7 @@
                        		 <tbody>
                             </tbody>
                           </table>
+                          </div>
                     </div>
                 </div>
                 
@@ -259,6 +328,7 @@
         			});
         	});
         	table=$('#dt_table_view').DataTable( {
+        		"dom": "rt<'row'<'col-sm-5'i><'col-sm-7'p>>",
 	            "ajax": {
 	                "url":  $.common.getContextPath() + "/user/list",
 	                "type": "POST",

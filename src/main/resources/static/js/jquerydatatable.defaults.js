@@ -8,6 +8,7 @@ $.extend( true, $.fn.dataTable.defaults, {
 	"serverMethod" : "POST",
 	"processing" : true,
 	"sort" : true,
+	"dom": 'lrtip',
 	'language': {  
         'emptyTable': '没有数据',  
         'loadingRecords': '加载中...',  
