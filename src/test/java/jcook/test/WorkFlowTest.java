@@ -22,8 +22,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
 import com.pzy.jcook.SpringBootContext;
-import com.pzy.jcook.sys.entity.User;
 import com.pzy.jcook.sys.service.BaseService;
+import com.pzy.jcook.sys.service.UserService;
 import com.pzy.jcook.workflow.dto.ActivitDTO;
 import com.pzy.jcook.workflow.entity.Workitem;
 import com.pzy.jcook.workflow.service.WorkFlowService;
@@ -41,6 +41,15 @@ public class WorkFlowTest {
 	private WorkitemService workitemService;
 	@Autowired
 	BaseService<Workitem,Long> baseService;
+	
+	@Autowired
+	UserService userService ;
+	
+	@Test
+	public void getrole() throws ParseException  {
+		//userService.singlefindByRole(1l);
+	}
+	
 	@Test
 	public void taskTodo() throws ParseException  {
 		System.out.println("ddd");

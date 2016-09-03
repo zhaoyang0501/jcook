@@ -28,4 +28,12 @@ public class UserService extends BaseService<User, Long> {
 	public Role findRole(Long id){
 		return this.roleRepository.findOne(id);
 	}
+	
+	public List<User> findAll(){
+		return (List<User>)this.userRepository.findAll();
+	}
+	
+	public List<User> findUserByRole(Long roleid){
+		return this.userRepository.findUserByRole(roleid);
+	}
 }

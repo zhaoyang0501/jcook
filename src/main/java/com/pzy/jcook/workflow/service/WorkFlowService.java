@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 import com.pzy.jcook.sys.entity.User;
 import com.pzy.jcook.sys.repository.UserRepository;
 import com.pzy.jcook.workflow.dto.ActivitDTO;
+import com.pzy.jcook.workflow.dto.ActivitiHistoryTaskDTO;
 
 
 @Service
@@ -34,7 +37,47 @@ public class WorkFlowService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
+	/***
+	 * 获取某一流程的当前节点以及处理人
+	 * @return
+	 */
+	public Task getCurrentTask(String prcessInstanceid){
+		List<Task> tasks=processEngine.getTaskService().createTaskQuery().processInstanceId(prcessInstanceid).orderByTaskCreateTime().desc().list();
+		return tasks.size()==0?null:tasks.get(0);
+		
+	}
+	/***
+	 * 获取流程轨迹
+	 * @param pid
+	 * @return
+	 */
+	public List<ActivitiHistoryTaskDTO> findHistoryTask(String pid){
+		List<ActivitiHistoryTaskDTO> activitiHistoryTasks= new ArrayList<ActivitiHistoryTaskDTO>();
+		
+		List<HistoricActivityInstance> historicActivityInstances = processEngine.getHistoryService().createHistoricActivityInstanceQuery()
+				.processInstanceId(pid).orderByHistoricActivityInstanceStartTime().asc(). orderByExecutionId().desc().list();
+		
+		for(HistoricActivityInstance historicActivityInstance: historicActivityInstances){
+			if(historicActivityInstance.getActivityType().equals("userTask")||historicActivityInstance.getActivityType().equals("endEvent")){
+				ActivitiHistoryTaskDTO activitiHistoryTask=new ActivitiHistoryTaskDTO();
+				activitiHistoryTask.setEndTime(historicActivityInstance.getEndTime());
+				activitiHistoryTask.setStartTime(historicActivityInstance.getStartTime());
+				activitiHistoryTask.setName(historicActivityInstance.getActivityName());
+				/**获取审批意见以及流程描述*/
+				if (StringUtils.isNotBlank(historicActivityInstance.getTaskId())){
+					List<Comment> commentList = processEngine.getTaskService().getTaskComments(historicActivityInstance.getTaskId());
+					if (commentList.size()>0){
+						activitiHistoryTask.setApproves(commentList.get(0).getFullMessage());
+					}
+				}
+				/**获取执行者*/
+				if(!StringUtils.isBlank(historicActivityInstance.getAssignee())&&!StringUtils.contains(historicActivityInstance.getAssignee(), ","))
+					activitiHistoryTask.setUser(userRepository.findOne(Long.valueOf(historicActivityInstance.getAssignee())));
+				activitiHistoryTasks.add(activitiHistoryTask);
+			}
+		}
+		return activitiHistoryTasks;
+	}
 	/***
 	 * 查询待办事项
 	 * @param begin

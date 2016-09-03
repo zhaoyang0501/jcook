@@ -43,7 +43,7 @@ public class DruidConfiguration {
         druidDataSource.setUsername(username);
         druidDataSource.setPassword(password);
         try {
-            druidDataSource.setFilters("stat, wall");
+            druidDataSource.setFilters("stat");
         } catch (SQLException e) {
             e.printStackTrace();
         }

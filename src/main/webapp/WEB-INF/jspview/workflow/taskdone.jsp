@@ -175,10 +175,24 @@
 				 "columnDefs": [
 				                {
 				                    "render": function ( data, type, row ) {
-				                    	  return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>查看详情 </a>";
-						                    
+				                        return  "<a tager='_blank'  href='${pageContext.request.contextPath}/workflow/taskhistory/"+row.processInstanceId+"' >详情</a>";
 				                    },
 				                    "targets":5
+				                },
+				                {
+				                    "render": function ( data, type, row ) {
+				                        return  "<span class='label label-primary'>"+data+"</span>";
+				                    },
+				                    "targets":3
+				                },
+				                {
+				                    "render": function ( data, type, row ) {
+				                    	if(data=='进行中')
+				                       	 return  "<span class='label label-primary'>"+data+"</span>";
+				                        else
+				                        	return  "<span class='label label-danger'>"+data+"</span>";
+				                    },
+				                    "targets":4
 				                }
 				               
 				            ],

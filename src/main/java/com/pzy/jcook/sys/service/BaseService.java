@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +40,7 @@ public class BaseService <M extends BaseEntity<?>, ID extends Serializable> {
          Specification<M> spec = new Specification<M>() {
               public Predicate toPredicate(Root<M> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
               Predicate predicate = cb.conjunction();
-              if (name != null) {
+              if (StringUtils.isNotBlank(name)) {
                    predicate.getExpressions().add(cb.like(root.get(targerAttr).as(String.class), "%"+name+"%"));
               }
               return predicate;

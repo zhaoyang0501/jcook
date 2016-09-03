@@ -15,6 +15,7 @@
     <link href="${pageContext.request.contextPath}/css/style.min.css?v=4.1.0" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/plugins/chosen/chosen.css" rel="stylesheet">
     <style type="text/css">
     
     </style>
@@ -26,7 +27,7 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>发布任务</h5>
+                        <h5>任务申请</h5>
                         <div class="ibox-tools">
                         </div>
                     </div>
@@ -40,27 +41,39 @@
 		                           		</thead>
 		                           		<tbody>
 		                           			<tr>
-		                           				<td>标题</td>
-		                           				<td> <input required="required" name='title' type="text" class="form-control">	<span class="needtip">*</span></td>
+		                           				<td>任务标题</td>
+		                           				<td> <input required="required" name='title' type="text" class="form-control">	</td>
 		                           			</tr>
 		                           			<tr>
-		                           				<td>任务描述</td>
+		                           				<td>任务说明</td>
 		                           				<td> <textarea required="required" name='remark' rows="4" cols="" style="width: 100%" ></textarea></td>
 		                           			</tr>
 		                           			
 		                           			<tr>	
-		                           				<td>任务开展日期</td>
+		                           				<td>任务拟开展日期</td>
 		                           				<td> 
 							                        <input required="required" name='beginDate' type="text" class="form-control input-group date" >
 		                           				</td>
 		                           			</tr>
 		                           				
 		                           			<tr>	
-		                           				<td>限期完成</td>
+		                           				<td>任务拟结束日期</td>
 		                           				<td> 
 							                        <input required="required"  name='endDate' type="text" class="form-control input-group date" >
 		                           				</td>
 		                           			</tr>
+		                           			
+		                           			<tr>	
+		                           				<td>推荐组员</td>
+		                           				<td> 
+					                                <select name='applyusers' class="chzn-select " multiple  data-placeholder="推荐组员" class="chosen-select" style="width:350px;" tabindex="2">
+					                                	<c:forEach items="${users }" var="user">
+					                                		<option value="${user.id }">${user.chinesename}</option>
+					                                	</c:forEach>
+					                                </select>
+		                           				</td>
+		                           			</tr>
+		                           			
 		                           			<tr>	
 		                           				<td>附件</td>
 		                           				<td> 
@@ -100,6 +113,7 @@
     <script src="${pageContext.request.contextPath}/js/jquery.min.js?v=2.1.4"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js?v=3.3.6"></script>
     <script src="${pageContext.request.contextPath}/js/content.min.js?v=1.0.0"></script>
+      <script src="${pageContext.request.contextPath}/js/plugins/chosen/chosen.jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/common.js?v=1.0.0"></script>
@@ -112,6 +126,9 @@
 		
 		
         $(document).ready(function(){
+        	
+        	  $(".chzn-select").chosen({width:"100%"});
+        	
         	$(".date").datepicker({
         		language:  'zh-CN',
     	        weekStart: 1,

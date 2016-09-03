@@ -175,10 +175,15 @@
 				 "columnDefs": [
 				                {
 				                    "render": function ( data, type, row ) {
-				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>签收 </a>"+
-				                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>处理</a>";
+				                        return  "<a class='J_menuItem' tager='_blank' data-index='"+row.stepId+"' href='${pageContext.request.contextPath}/workflow/task/"+row.stepId+"/"+row.processInstanceId+"' >处理</a>";
 				                    },
 				                    "targets":5
+				                },
+				                {
+				                    "render": function ( data, type, row ) {
+				                        return  "<span class='label label-primary'>"+data+"</span>";
+				                    },
+				                    "targets":3
 				                }
 				               
 				            ],

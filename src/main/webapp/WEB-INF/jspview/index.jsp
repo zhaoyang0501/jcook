@@ -58,7 +58,7 @@
                         <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">业务菜单</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="user/index">员工管理</a</li>
-                              <li><a class="J_menuItem" href="workitem/create">上传任务</a</li>
+                              <li><a class="J_menuItem" href="workitem/create">任务申请</a</li>
                                 <li><a class="J_menuItem" href="${pageContext.request.contextPath}/workflow/tasktodo">我的待办</a</li>
                                  <li><a class="J_menuItem" href="workflow/taskdone">我的已办</a</li>
                                    <li><a class="J_menuItem" href="#">任务监控</a</li>

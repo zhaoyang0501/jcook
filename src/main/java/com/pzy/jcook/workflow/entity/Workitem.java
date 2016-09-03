@@ -27,10 +27,39 @@ public class Workitem  extends BaseEntity<Long>{
 	private User leader;
 	
 	@OneToMany
+	private Set<User> applyusers;
+	
+	@OneToMany
+	private Set<User> handleusers;
+	
+	@OneToMany
 	private Set<User> users;
 	
 	private String state;
 	
+	private String approve;
+	
+	private Integer reject;
+
+	public String getApprove() {
+		return approve;
+	}
+
+
+	public void setApprove(String approve) {
+		this.approve = approve;
+	}
+
+
+	public Integer getReject() {
+		return reject;
+	}
+
+
+	public void setReject(Integer reject) {
+		this.reject = reject;
+	}
+
 
 	public String getTitle() {
 		return title;
@@ -59,6 +88,16 @@ public class Workitem  extends BaseEntity<Long>{
 
 	public void setBeginDate(Date beginDate) {
 		this.beginDate = beginDate;
+	}
+
+
+	public Set<User> getApplyusers() {
+		return applyusers;
+	}
+
+
+	public void setApplyusers(Set<User> applyusers) {
+		this.applyusers = applyusers;
 	}
 
 
@@ -110,6 +149,16 @@ public class Workitem  extends BaseEntity<Long>{
 
 	public void setCreater(User creater) {
 		this.creater = creater;
+	}
+
+
+	public Set<User> getHandleusers() {
+		return handleusers;
+	}
+
+
+	public void setHandleusers(Set<User> handleusers) {
+		this.handleusers = handleusers;
 	}
 
 	
