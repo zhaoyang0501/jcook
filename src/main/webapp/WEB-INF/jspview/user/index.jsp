@@ -1,145 +1,103 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H+ 后台主题UI框架 - 基本表单</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <link rel="shortcut icon" href="favicon.ico">
-     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/animate.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/style.min.css?v=4.1.0" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
-  <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-</head>
-<body >
-    <div class="wrapper wrapper-content animated fadeInRight">
-       
-        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+ <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="description" content="overview &amp; stats" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<!-- page specific plugin styles -->
+		<!-- text fonts -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/fonts.googleapis.com.css" />
+		<!-- ace styles -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-rtl.min.css" />
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-ie.min.css" />
+		<![endif]-->
+		<!-- inline styles related to this page -->
+		<!-- ace settings handler -->
+		<script src="${pageContext.request.contextPath}/assets/js/ace-extra.min.js"></script>
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+		<!--[if lte IE 8]>
+		<script src="${pageContext.request.contextPath}/assets/js/html5shiv.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
 
-                                        <th></th>
-                                        <th>项目</th>
-                                        <th>进度</th>
-                                        <th>任务</th>
-                                        <th>日期</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" checked class="i-checks" name="input[]">
-                                        </td>
-                                        <td>米莫说｜MiMO Show</td>
-                                        <td><span class="pie">0.52/1.561</span>
-                                        </td>
-                                        <td>20%</td>
-                                        <td>2014.11.11</td>
-                                        <td><a href="table_basic.html#"><i class="fa fa-check text-navy"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" class="i-checks" name="input[]">
-                                        </td>
-                                        <td>商家与购物用户的交互试衣应用</td>
-                                        <td><span class="pie">6,9</span>
-                                        </td>
-                                        <td>40%</td>
-                                        <td>2014.11.11</td>
-                                        <td><a href="table_basic.html#"><i class="fa fa-check text-navy"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" class="i-checks" name="input[]">
-                                        </td>
-                                        <td>天狼---智能硬件项目</td>
-                                        <td><span class="pie">3,1</span>
-                                        </td>
-                                        <td>75%</td>
-                                        <td>2014.11.11</td>
-                                        <td><a href="table_basic.html#"><i class="fa fa-check text-navy"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" class="i-checks" name="input[]">
-                                        </td>
-                                        <td>线下超市+线上商城+物流配送互联系统</td>
-                                        <td><span class="pie">4,9</span>
-                                        </td>
-                                        <td>18%</td>
-                                        <td>2014.11.11</td>
-                                        <td><a href="table_basic.html#"><i class="fa fa-check text-navy"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-       
-       <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox ">
-                  
-                    <div class="ibox-title">
-                        <h5>用户管理 </h5>
-                        <div class="ibox-tools">
-                        </div>
-                    </div>
-                    
-                    <div class="ibox-content">
-                        <form role="form" class="form-inline">
-                            <div class="form-group">
-                                <label for="exampleInputEmail2" class="sr-only">姓名</label>
-                                <input type="text" placeholder="姓名" id="_name" class="form-control">
-                            </div>
-                            <button class="btn btn-primary" type="button" id='_search'>查询</button>
-                            <button class="btn btn-primary" type="button" id='_new'>新建</button>
-                        </form>
-                    </div>
-                    
-                    <div class="ibox-content ">
-                       <div class="table-responsive" style="overflow: scroll;">
-                         <table ID='dt_table_view' class="table table-striped table-bordered table-hover ">
-                            <thead>
-                                <tr>
-									<th>id</th>
-									<th>手机号码</th>
-									<th>真实姓名</th>
-									<th>性别</th>
-									<th>备用电话</th>
-									<th>电子邮件</th>
-									<th>责任区域</th>
-									<th>操作</th>
-								</tr>
-                            </thead>
-                       		 <tbody>
-                            </tbody>
-                          </table>
-                          </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-   </div>
-   <div id='_form' style="display: none;">
-       <div class="ibox-content">
+	<body class="no-skin">
+		<%@include file="../top.jsp" %>
+		<div class="main-container ace-save-state" id="main-container">
+		<%@include file="../menu.jsp" %>
+			<div class="main-content">
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#">首页</a>
+							</li>
+							<li class="active">员工管理</li>
+						</ul>
+					</div>
+
+				<div class="page-content">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="page-header page-header-revise">
+									<form role="form" class="form-inline">
+										<div class="form-group">
+											<div class="input-group">
+												<input type="text"  id="_name"
+													placeholder="姓名" class="form-control ">
+												<span class="input-group-btn">
+													<button class="btn btn-purple btn-sm" id="_search" type="button">
+														<i class="icon-search icon-on-right "></i> 搜索
+													</button>
+												</span>
+											</div>
+											  <button class="btn btn-primary btn-sm" type="button" id='_new'>新建</button>
+										</div>
+									</form>
+                       			 </form>
+									
+								</div>
+
+							<div class="table-responsive" >
+		                         <table ID='dt_table_view' class="table table-striped table-bordered table-hover ">
+		                            <thead>
+		                                <tr>
+											<th>id</th>
+											<th>手机号码</th>
+											<th>真实姓名</th>
+											<th>性别</th>
+											<th>备用电话</th>
+											<th>电子邮件</th>
+											<th>责任区域</th>
+											<th>操作</th>
+										</tr>
+		                            </thead>
+		                       		 <tbody>
+		                            </tbody>
+		                          </table>
+		                          </div>
+						</div>
+				</div>
+				
+				
+				
+				   <div id='_form' style="display: none;">
  		 <div class="row">
-                            <div class="col-sm-12 b-r">
+                            <div class="col-sm-12 table-responsive ">
 		                           <form class="form-horizontal" action="" method="get">
 		                           <input name='id' type="hidden"/>
 		                           	<table class='table table-bordered'>
@@ -214,7 +172,7 @@
 		                           				<td colspan="6"> 
 		                           					 <div class="col-sm-4 col-sm-offset-2">
 		                                  			  		<button class="btn btn-primary" type="button" onclick="submit_form()">提交</button>
-		                                   				    <button class="btn btn-white" type="submit">取消</button>
+		                                   				    <button class="btn " type="submit">取消</button>
 		                               				 </div>
 		                           				</td>
 		                           			</tr>
@@ -223,25 +181,53 @@
 		                           	</form>
                             </div>
                         </div>
-                        </div>
    </div>
-    <script src="${pageContext.request.contextPath}/js/plugins/dataTables/jquery.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="${pageContext.request.contextPath}/js/content.min.js?v=1.0.0"></script>
-    <script src="${pageContext.request.contextPath}/js/plugins/iCheck/icheck.min.js"></script>
-     <script src="${pageContext.request.contextPath}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-      
-      <script src="${pageContext.request.contextPath}/js/plugins/layer/layer.js"></script>
-    <!-- Data Tables -->
+   
+				
+				<!-- /.page-content -->
+			</div><!-- /.main-content -->
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!--[if !IE]> -->
+		<script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script src="${pageContext.request.contextPath}/assets/js/jquery-1.11.3.min.js"></script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='${pageContext.request.contextPath}/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="${pageContext.request.contextPath}/assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="${pageContext.request.contextPath}/assets/js/jquery-ui.custom.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/jquery.ui.touch-punch.min.js"></script>
+		<!-- ace scripts -->
+		<script src="${pageContext.request.contextPath}/assets/js/ace-elements.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
+  <!-- Data Tables -->
     <script src="${pageContext.request.contextPath}/js/plugins/dataTables/jquery.dataTables.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/dataTables/dataTables.bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/common.js?v=1.0.0"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js?sf=1"></script>
-    <script>
-    <c:if test="${state=='success'}">
+      <script src="${pageContext.request.contextPath}/js/plugins/layer/layer.js"></script>
+  
+	</body>
+	<script>
+	 <c:if test="${state=='success'}">
 	  toastr.success('${tip}');
 	 </c:if>
+  
     $.common.setContextPath('${pageContext.request.contextPath}');
     
     var table=null;
@@ -376,6 +362,4 @@
 		     } )
         });
     </script>
-</body>
-
 </html>

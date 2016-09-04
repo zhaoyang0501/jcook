@@ -1,46 +1,68 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="shortcut icon" href="favicon.ico">
-     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/animate.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/style.min.css?v=4.1.0" rel="stylesheet">
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+ <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="description" content="overview &amp; stats" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<!-- page specific plugin styles -->
+		<!-- text fonts -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/fonts.googleapis.com.css" />
+		<!-- ace styles -->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-rtl.min.css" />
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-ie.min.css" />
+		<![endif]-->
+		<!-- inline styles related to this page -->
+		<!-- ace settings handler -->
+		<script src="${pageContext.request.contextPath}/assets/js/ace-extra.min.js"></script>
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+		<!--[if lte IE 8]>
+		<script src="${pageContext.request.contextPath}/assets/js/html5shiv.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/respond.min.js"></script>
+		<![endif]-->
 	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/plugins/chosen/chosen.css" rel="stylesheet">
-    <style type="text/css">
-    
-    </style>
-</head>
+      <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+	</head>
 
-<body class="gray-bg">
-    <div class="wrapper wrapper-content animated fadeInRight">
-       <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>任务申请</h5>
-                        <div class="ibox-tools">
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <div class="col-sm-12 b-r">
+	<body class="no-skin">
+		<%@include file="../top.jsp" %>
+		<div class="main-container ace-save-state" id="main-container">
+		<%@include file="../menu.jsp" %>
+			<div class="main-content">
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#">首页</a>
+							</li>
+							<li class="active">任务申请</li>
+						</ul>
+					</div>
+
+				<div class="page-content">
+						<div class="row">
+                            <div class="col-sm-12 table-responsive">
 		                           <form class="form-horizontal" action="${pageContext.request.contextPath}/workitem/create" method="post">
 		                           	<table class='table table-bordered'>
 		                           		<thead>
-		                           		<tr style="text-align: center;" ><td colspan="6" ><h3>任务详情<h3></h3></td></tr>
+		                           		<tr style="text-align: center;" ><td colspan="2" ><h3>任务详情<h3></td></tr>
 		                           		</thead>
 		                           		<tbody>
-		                           			<tr>
+		                           		<tr>
 		                           				<td>任务标题</td>
 		                           				<td> <input required="required" name='title' type="text" class="form-control">	</td>
 		                           			</tr>
@@ -51,8 +73,8 @@
 		                           			
 		                           			<tr>	
 		                           				<td>任务拟开展日期</td>
-		                           				<td> 
-							                        <input required="required" name='beginDate' type="text" class="form-control input-group date" >
+		                           				<td>
+													<input required="required"  name='begainDate' type="text" class="form-control input-group date" >
 		                           				</td>
 		                           			</tr>
 		                           				
@@ -61,12 +83,11 @@
 		                           				<td> 
 							                        <input required="required"  name='endDate' type="text" class="form-control input-group date" >
 		                           				</td>
-		                           			</tr>
-		                           			
+		                           			</tr>	
 		                           			<tr>	
 		                           				<td>推荐组员</td>
 		                           				<td> 
-					                                <select name='applyusers' class="chzn-select " multiple  data-placeholder="推荐组员" class="chosen-select" style="width:350px;" tabindex="2">
+					                                <select name='applyusers' class="chzn-select " multiple  data-placeholder="推荐组员" class="chosen-select form-control"  tabindex="2">
 					                                	<c:forEach items="${users }" var="user">
 					                                		<option value="${user.id }">${user.chinesename}</option>
 					                                	</c:forEach>
@@ -94,7 +115,7 @@
 		                           				<td colspan="6"> 
 		                           					 <div class="col-sm-4 col-sm-offset-2">
 		                                  			  		<button class="btn btn-primary" type="submit">提交</button>
-		                                   				    <button class="btn btn-white" type="submit">取消</button>
+		                                   				    <button class="btn " type="submit">取消</button>
 		                               				 </div>
 		                           				</td>
 		                           			</tr>
@@ -103,45 +124,70 @@
 		                           	</form>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-   </div>
-    <script src="${pageContext.request.contextPath}/js/jquery.min.js?v=2.1.4"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="${pageContext.request.contextPath}/js/content.min.js?v=1.0.0"></script>
+				</div>
+				<!-- /.page-content -->
+			</div><!-- /.main-content -->
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!--[if !IE]> -->
+		<script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script src="${pageContext.request.contextPath}/assets/js/jquery-1.11.3.min.js"></script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='${pageContext.request.contextPath}/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="${pageContext.request.contextPath}/assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="${pageContext.request.contextPath}/assets/js/jquery-ui.custom.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/jquery.ui.touch-punch.min.js"></script>
+		<!-- ace scripts -->
+		<script src="${pageContext.request.contextPath}/assets/js/ace-elements.min.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
+  <!-- Data Tables -->
+    <script src="${pageContext.request.contextPath}/js/plugins/dataTables/jquery.dataTables.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/plugins/dataTables/dataTables.bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/common.js?v=1.0.0"></script>
+    <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js?sf=1"></script>
+    
       <script src="${pageContext.request.contextPath}/js/plugins/chosen/chosen.jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-    <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/common.js?v=1.0.0"></script>
+	  <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
+	</body>
+	<script>
+    $.common.setContextPath('${pageContext.request.contextPath}');
+	<c:if test="${response.code=='1'}">
+	  toastr.success('${response.msg}');
+	</c:if>
+    var table=null;
+  
     
-    <script>
-		$.common.setContextPath('${pageContext.request.contextPath}');
-		<c:if test="${response.code=='1'}">
-	  		  toastr.success('${response.msg}');
-	    </c:if>
-		
-		
-        $(document).ready(function(){
-        	
-        	  $(".chzn-select").chosen({width:"100%"});
-        	
-        	$(".date").datepicker({
-        		language:  'zh-CN',
-    	        weekStart: 1,
-    	        todayBtn:  1,
-    	        format:'yyyy-mm-dd',
-    			autoclose: 1,
-    			todayHighlight: 1,
-    			startView: 2,
-    			minView: 2,
-    			forceParse: 0
-        		});
+    $(document).ready(function(){
+    	 $(".chzn-select").chosen({width:"100%"});
+     	
+     	$(".date").datepicker({
+     		language:  'zh-CN',
+ 	        weekStart: 1,
+ 	        todayBtn:  1,
+ 	        format:'yyyy-mm-dd',
+ 			autoclose: 1,
+ 			todayHighlight: 1,
+ 			startView: 2,
+ 			minView: 2,
+ 			forceParse: 0
+     		});
         });
     </script>
-</body>
-
 </html>

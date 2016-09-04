@@ -15,6 +15,7 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,7 +174,7 @@ public class WorkitemController {
 								Workitem workitem,
 								String handleusers,
 								RedirectAttributes redirectAttributes ) {
-		
+		Assert.isTrue(StringUtils.isBlank(handleusers), "没有选择任务处理人！");
 		ProcessInstance processInstance = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(prcessInstanceid).singleResult();
 
 		Task task = processEngine.getTaskService().createTaskQuery().taskId(taskid).singleResult();
@@ -188,6 +189,8 @@ public class WorkitemController {
 			processEngine.getTaskService().addComment(task.getId(), processInstance.getId(), approvals);
 			processEngine.getTaskService().complete(task.getId(), activtiMap);
 			workitem.setApprove(approvals);
+			if(workitem.getLeader()!=null&workitem.getLeader().getId()!=null)
+				workitem.setLeader(userService.find(workitem.getLeader().getId()));
 			workitem.setReject(pass?0:1);
 			this.workitemService.save(workitem,handleusers);
 		} else if ("handle".equals(task.getTaskDefinitionKey())) {
