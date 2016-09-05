@@ -132,7 +132,7 @@ public class WorkFlowService {
 			dto.setProcessInstanceId(task.getProcessInstanceId());
 			dtos.add(dto);
 		}
-		int pageNumber = (int) (firstResult / pageSize) + 1;
+		int pageNumber = (int) (firstResult / pageSize) ;
 		Pageable pageable =new PageRequest(pageNumber, pageSize); 
 		Page<ActivitDTO> pageActivitDTOs = new PageImpl<ActivitDTO>(dtos, pageable, count);
 		return pageActivitDTOs;
@@ -223,7 +223,7 @@ public class WorkFlowService {
 			dto.setProcessInstanceId(historicProcessInstance.getId());
 			dtos.add(dto);
 		}
-		int pageNumber = (int) (firstResult / pageSize) + 1;
+		int pageNumber = (int) (firstResult / pageSize) ;
 		Pageable pageable =new PageRequest(pageNumber, pageSize); 
 		Page<ActivitDTO> pageActivitDTOs = new PageImpl<ActivitDTO>(dtos, pageable, count);
 		return pageActivitDTOs;
