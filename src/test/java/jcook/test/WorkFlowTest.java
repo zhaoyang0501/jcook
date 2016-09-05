@@ -20,11 +20,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
+import org.springframework.web.client.RestTemplate;
 
 import com.pzy.jcook.SpringBootContext;
 import com.pzy.jcook.sys.service.BaseService;
 import com.pzy.jcook.sys.service.UserService;
 import com.pzy.jcook.workflow.dto.ActivitDTO;
+import com.pzy.jcook.workflow.dto.ShortUrlDTO;
 import com.pzy.jcook.workflow.entity.Workitem;
 import com.pzy.jcook.workflow.service.WorkFlowService;
 import com.pzy.jcook.workflow.service.WorkitemService;
@@ -41,6 +43,8 @@ public class WorkFlowTest {
 	private WorkitemService workitemService;
 	@Autowired
 	BaseService<Workitem,Long> baseService;
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	@Autowired
 	UserService userService ;
@@ -78,7 +82,7 @@ public class WorkFlowTest {
 		activtiMap.put("creater",1l);
 		ProcessInstance processInstance=processEngine.getRuntimeService().startProcessInstanceByKey
 				("workitem", workitem.getId().toString(),activtiMap);
-		/**完成第一步（提交申请）*/
+		/**完成第一步（提交申请）*/	
 		String sn="WORKITEM"+DateFormatUtils.format(new Date(),"_yyyy_MM_")+processInstance.getId();
 		processEngine.getRuntimeService().setVariable(processInstance.getProcessInstanceId(), "sn", sn);
 		
@@ -86,5 +90,13 @@ public class WorkFlowTest {
 				processInstanceId(processInstance.getId()).list();
 		processEngine.getTaskService().complete(tasks.get(0).getId(),activtiMap);
 		  
+	}
+	@Test
+	public void shortUrl(){
+		Map<String ,Object> urlVariables = new HashMap<String ,Object>(); 
+		urlVariables.put("url", "www.baidu.com"); 
+		
+		String dto = this.restTemplate.getForObject("http://www.cnbeta.com", null, String.class,urlVariables);
+		System.out.println(dto);
 	}
 }
