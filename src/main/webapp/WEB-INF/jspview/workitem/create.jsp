@@ -36,6 +36,8 @@
 	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/plugins/chosen/chosen.css" rel="stylesheet">
       <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+      <link href="${pageContext.request.contextPath}/css/plugins/webuploader/webuploader.css" rel="stylesheet">
+      
 	</head>
 
 	<body class="no-skin">
@@ -59,7 +61,7 @@
 		                           <form class="form-horizontal" action="${pageContext.request.contextPath}/workitem/create" method="post">
 		                           	<table class='table table-bordered'>
 		                           		<thead>
-		                           		<tr style="text-align: center;" ><td colspan="2" ><h3>任务详情<h3></td></tr>
+		                           		<tr  ><th style="text-align: center;" colspan="2" >任务详情</th></tr>
 		                           		</thead>
 		                           		<tbody>
 		                           		<tr>
@@ -74,7 +76,7 @@
 		                           			<tr>	
 		                           				<td>任务拟开展日期</td>
 		                           				<td>
-													<input required="required"  name='begainDate' type="text" class="form-control input-group date" >
+													<input required="required"  name='beginDate' type="text" class="form-control input-group date" >
 		                           				</td>
 		                           			</tr>
 		                           				
@@ -98,7 +100,17 @@
 		                           			<tr>	
 		                           				<td>附件</td>
 		                           				<td> 
-							                        <input name='atte' type="text" class="form-control " >
+							                        <div id="uploader" >
+													    <div id="thelist" class="uploader-list"></div>
+													    	
+													    	<div class="row">
+													    		<div class="col-xs-12">
+													    			<div id="picker">选择文件</div>
+													    		</div>
+													    	</div>
+													    	
+													     
+													</div>
 		                           				</td>
 		                           			</tr>
 		                           			
@@ -115,7 +127,6 @@
 		                           				<td colspan="6"> 
 		                           					 <div class="col-sm-4 col-sm-offset-2">
 		                                  			  		<button class="btn btn-primary" type="submit">提交</button>
-		                                   				    <button class="btn " type="submit">取消</button>
 		                               				 </div>
 		                           				</td>
 		                           			</tr>
@@ -165,6 +176,7 @@
       <script src="${pageContext.request.contextPath}/js/plugins/chosen/chosen.jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	  <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
+	 <script src="${pageContext.request.contextPath}/plugins/webuploader/webuploader.js "></script>
 	</body>
 	<script>
     $.common.setContextPath('${pageContext.request.contextPath}');
@@ -175,8 +187,42 @@
   
     
     $(document).ready(function(){
-    	 $(".chzn-select").chosen({width:"100%"});
-     	
+    	$(".chzn-select").chosen({width:"100%"});
+    	
+    	var uploader = WebUploader.create({
+    		auto:true,
+    	    server: '${pageContext.request.contextPath}/fileupload/upload',
+    	    pick: '#picker',
+    	    resize: false
+    	});
+    	
+    	uploader.on( 'fileQueued', function( file ) {
+    	    $("#uploader").append( '<div id="' + file.id + '" class="item">' +
+    	        '<h4 class="info">' + file.name + '</h4>' +
+    	        '<p class="state">等待上传...</p>' +
+    	       ' <input type="hidden" name="filestr" value=""/>'+
+    	       '</div>' );
+    	});
+    	uploader.on( 'uploadSuccess',  function(file, data){
+    		 $( '#'+file.id ).find('p.state').text('已上传');
+    		 alert(data.datas.filepath);
+    		 $( '#'+file.id ).find("input").val(data.datas.filepath);
+    		    return false;
+		});
+
+    	uploader.on( 'uploadError', function( file ) {
+    	    $( '#'+file.id ).find('p.state').text('上传出错');
+    	});
+
+    	uploader.on( 'uploadComplete', function( file ) {
+    	    $( '#'+file.id ).find('.progress').fadeOut();
+    	});
+    	
+    	 $("#submitfile").on( 'click', function() {
+    		 uploader.upload();
+    	  });
+
+    	 
      	$(".date").datepicker({
      		language:  'zh-CN',
  	        weekStart: 1,

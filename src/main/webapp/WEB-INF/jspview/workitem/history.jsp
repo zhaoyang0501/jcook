@@ -52,10 +52,34 @@
 
 				<div class="page-content">
 						 <div class="row">
+						 <div class="col-sm-12">
+							 <ul class="steps"> 
+										<li data-step="1" class="active">
+											<span class="step">1</span>
+											<span class="title">提交任务</span>
+										</li>
+	
+										<li data-step="2">
+											<span class="step">2</span>
+											<span class="title">分配任务</span>
+										</li>
+	
+										<li data-step="3">
+											<span class="step">3</span>
+											<span class="title">处理任务</span>
+										</li>
+	
+										<li data-step="4">
+											<span class="step">4</span>
+											<span class="title">任务结束</span>
+										</li>
+								</ul>
+						 </div>
+						 
                             <div class="col-sm-12 table-responsive ">
 			                           	<table class='table table-bordered'>
 			                           		<thead>
-			                           		<tr style="text-align: center;" ><td colspan="2" ><h3>任务详情<h3></h3></td></tr>
+			                           		<tr  ><th style="text-align: center;" colspan="2" >任务详情</th></tr>
 			                           		</thead>
 			                           		<tbody>
 			                           			<tr>
@@ -84,7 +108,10 @@
 			                           			<tr>	
 			                           				<td>附件</td>
 			                           				<td> 
-								                        	<a href="#">XX.doc</a>
+								                        	<c:forEach items="${bean.files }" var="file">
+								                        		<a href="${pageContext.request.contextPath}/upload/${file }">${file }</a>
+								                        		<br/>
+								                        	</c:forEach>	
 			                           				</td>
 			                           			</tr>
 			                           			<tr>	
@@ -196,6 +223,28 @@
   
     
     $(document).ready(function(){
+    	
+    	if("${task.name}"=='提交任务'){
+    		$(".steps li").removeClass("active");
+    		$(".steps li").eq(0).addClass("active");
+    	}
+    	else if("${task.name}"=='分配任务'){
+    		$(".steps li").removeClass("active");
+    		$(".steps li").eq(0).addClass("active");
+    		$(".steps li").eq(1).addClass("active");
+    	}else if("${task.name}"=='处理任务'){
+    		$(".steps li").removeClass("active");
+    		$(".steps li").eq(0).addClass("active");
+    		$(".steps li").eq(1).addClass("active");
+    		$(".steps li").eq(2).addClass("active");
+    	}else{
+    		$(".steps li").removeClass("active");
+    		$(".steps li").eq(0).addClass("active");
+    		$(".steps li").eq(1).addClass("active");
+    		$(".steps li").eq(2).addClass("active");
+    		$(".steps li").eq(3).addClass("active");
+    	}
+    	
         	$("#_new").click(function(){
         		$("input[name='id']").val("");
  		    	$("input[name='chinesename']").val("");

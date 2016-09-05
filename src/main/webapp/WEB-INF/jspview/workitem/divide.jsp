@@ -49,7 +49,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active">任务申请</li>
+							<li class="active">任务分配</li>
 						</ul>
 					</div>
 
@@ -62,7 +62,7 @@
 			                           	<input type="hidden" id="pass" name="pass" value="true"/>
 			                           	<table class='table table-bordered'>
 			                           		<thead>
-			                           		<tr style="text-align: center;" ><td colspan="6" ><h3>任务详情<h3></h3></td></tr>
+			                           			<tr  ><th style="text-align: center;" colspan="2" >任务详情</th></tr>
 			                           		</thead>
 			                           		<tbody>
 			                           			<tr>
@@ -91,7 +91,7 @@
 			                           			<tr>	
 			                           				<td>分配给</td>
 			                           				<td> 
-						                                <select name='handleusers' class="chzn-select " multiple  data-placeholder="推荐组员" class="chosen-select"  tabindex="2">
+						                                <select required="required" name='handleusers' class="chzn-select " multiple  data-placeholder="推荐组员" class="chosen-select"  tabindex="2">
 						                                	<c:forEach items="${users }" var="user">
 						                                		<option value="${user.id }">${user.chinesename}</option>
 						                                	</c:forEach>
@@ -102,7 +102,7 @@
 			                           			<tr>	
 			                           				<td>组长</td>
 			                           				<td> 
-						                                <select  name='leader.id' required="required" class="form-control"  >
+						                                <select required="required"  name='leader.id' required="required" class="form-control"  >
 						                                	<c:forEach items="${users }" var="user">
 						                                		<option value="${user.id }">${user.chinesename}</option>
 						                                	</c:forEach>
@@ -114,7 +114,10 @@
 			                           			<tr>	
 			                           				<td>附件</td>
 			                           				<td> 
-								                        	<a href="#">XX.doc</a>
+								                        <c:forEach items="${bean.files }" var="file">
+								                        		<a href="${pageContext.request.contextPath}/upload/${file }">${file }</a>
+								                        		<br/>
+								                        	</c:forEach>	
 			                           				</td>
 			                           			</tr>
 			                           			

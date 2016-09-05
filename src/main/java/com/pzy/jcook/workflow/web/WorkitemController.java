@@ -78,9 +78,11 @@ public class WorkitemController {
 	 * @return
 	 */
 	@RequestMapping(value="create",method=RequestMethod.POST)
-	public String create(Model model,Workitem workitem,String applyusers) {
+	public String create(Model model,Workitem workitem,String applyusers,String filestr) {
 		User user=(User)SecurityUtils.getSubject().getSession().getAttribute("currentUser");
 		workitem.setCreater(user);
+		if(StringUtils.isNotBlank(filestr))
+			workitem.setFiles(filestr.split(","));
 		workitem.setCreateDate(new Date());
 		workitemService.save(workitem,applyusers);
 		/**发起流程*/
@@ -174,7 +176,8 @@ public class WorkitemController {
 								Workitem workitem,
 								String handleusers,
 								RedirectAttributes redirectAttributes ) {
-		Assert.isTrue(StringUtils.isBlank(handleusers), "没有选择任务处理人！");
+		if(StringUtils.isBlank(handleusers))
+			throw new RuntimeException("没有选择处理人");
 		ProcessInstance processInstance = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(prcessInstanceid).singleResult();
 
 		Task task = processEngine.getTaskService().createTaskQuery().taskId(taskid).singleResult();
