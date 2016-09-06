@@ -1,6 +1,7 @@
 package com.pzy.jcook.workflow.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -35,6 +36,8 @@ public class Workitem  extends BaseEntity<Long>{
 	@OneToMany
 	private Set<User> users;
 	
+	private String[] files;
+	
 	private String state;
 	
 	private String approve;
@@ -53,6 +56,19 @@ public class Workitem  extends BaseEntity<Long>{
 
 	public Integer getReject() {
 		return reject;
+	}
+
+
+	
+
+
+	public String[] getFiles() {
+		return files;
+	}
+
+
+	public void setFiles(String[] files) {
+		this.files = files;
 	}
 
 

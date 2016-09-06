@@ -33,6 +33,7 @@
 		<script src="${pageContext.request.contextPath}/assets/js/html5shiv.min.js"></script>
 		<script src="${pageContext.request.contextPath}/assets/js/respond.min.js"></script>
 		<![endif]-->
+		   <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 	</head>
 
 	<body class="no-skin">
