@@ -22,6 +22,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pzy.jcook.SpringBootContext;
 import com.pzy.jcook.sys.service.BaseService;
 import com.pzy.jcook.sys.service.UserService;
@@ -30,6 +32,8 @@ import com.pzy.jcook.workflow.dto.ShortUrlDTO;
 import com.pzy.jcook.workflow.entity.Workitem;
 import com.pzy.jcook.workflow.service.WorkFlowService;
 import com.pzy.jcook.workflow.service.WorkitemService;
+import com.pzy.jcook.workflow.service.nofy.DayuSMSNofyServiceImpl;
+import com.pzy.jcook.workflow.service.nofy.NofyService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=SpringBootContext.class)
@@ -48,7 +52,8 @@ public class WorkFlowTest {
 	
 	@Autowired
 	UserService userService ;
-	
+	@Autowired
+	DayuSMSNofyServiceImpl dayuSMSNofyServiceImpl;
 	@Test
 	public void getrole() throws ParseException  {
 		//userService.singlefindByRole(1l);
@@ -99,4 +104,40 @@ public class WorkFlowTest {
 		String dto = this.restTemplate.getForObject("http://www.cnbeta.com", null, String.class,urlVariables);
 		System.out.println(dto);
 	}
+	@Test
+	public void testjson(){
+		Map map = new HashMap();
+		map.put("stt", "sdfsdf");
+		map.put("s22tt", "sdfsdf");
+		 ObjectMapper mapper = new ObjectMapper(); 
+		 try {
+			String str = mapper.writeValueAsString(map);
+			System.out.println(str);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testsend(){
+		Map map = new HashMap();
+		map.put("username", "汪曾祺");
+		map.put("taskname", "测试");
+		map.put("phone", "13773319204");
+		dayuSMSNofyServiceImpl.send(map);
+	}
+	/*public static void main(String arg[]){
+		Map map = new HashMap();
+		map.put("stt", "sdfsdf");
+		map.put("s22tt", "sdfsdf");
+		ObjectMapper mapper = new ObjectMapper(); 
+		 try {
+			String str = mapper.writeValueAsString(map);
+			System.out.println(str);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
 }

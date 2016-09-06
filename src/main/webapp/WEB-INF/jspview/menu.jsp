@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<script type="text/javascript">
+			<script type="text/javascript">
 				try{ace.settings.loadState('main-container')}catch(e){}
 			</script>
 
-			<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
+			<div id="sidebar" class="sidebar   responsive  ace-save-state">
 				<script type="text/javascript">
 					try{ace.settings.loadState('sidebar')}catch(e){}
 				</script>
@@ -31,7 +31,7 @@
 					</a> <b class="arrow"></b></li>
 	
 	
-					<li class=""><a href="widgets.html"> <i
+					<li class=""><a href="${pageContext.request.contextPath}/workitem/index"> <i
 							class="menu-icon fa fa-list-alt"></i> <span class="menu-text">任务监控</span>
 					</a> <b class="arrow"></b></li>
 				</ul>

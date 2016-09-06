@@ -72,7 +72,7 @@ public class WorkFlowService {
 						activitiHistoryTask.setApproves(commentList.get(0).getFullMessage());
 					}
 					List<Attachment> attachments = processEngine.getTaskService().getTaskAttachments(historicActivityInstance.getTaskId());
-					
+					activitiHistoryTask.setAttachment(attachments);
 					
 				}
 				/**获取执行者*/

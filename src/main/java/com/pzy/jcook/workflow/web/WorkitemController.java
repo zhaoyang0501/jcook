@@ -20,6 +20,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -30,9 +31,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pzy.jcook.dto.json.DataTableResponse;
+import com.pzy.jcook.dto.json.Response;
 import com.pzy.jcook.dto.json.SuccessResponse;
 import com.pzy.jcook.sys.entity.User;
 import com.pzy.jcook.sys.service.UserService;
@@ -71,6 +75,14 @@ public class WorkitemController {
 		return  "workitem/create";
 	}
 	
+	@RequestMapping("list")
+	@ResponseBody
+	public Response list(Integer start, Integer length, String value) {
+		int pageNumber = (int) (start / length) + 1;
+		int pageSize = length;
+		Page<Workitem> m = workitemService.findAll(pageNumber, pageSize, value,"title");
+		return new DataTableResponse<Workitem>( m.getContent(),(int) m.getTotalElements() );
+	}
 	/***
 	 * 提交单据并发起流程
 	 * @param model
