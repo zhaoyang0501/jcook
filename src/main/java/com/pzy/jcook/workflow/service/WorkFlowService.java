@@ -11,6 +11,7 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -64,11 +65,15 @@ public class WorkFlowService {
 				activitiHistoryTask.setStartTime(historicActivityInstance.getStartTime());
 				activitiHistoryTask.setName(historicActivityInstance.getActivityName());
 				/**获取审批意见以及流程描述*/
+				
 				if (StringUtils.isNotBlank(historicActivityInstance.getTaskId())){
 					List<Comment> commentList = processEngine.getTaskService().getTaskComments(historicActivityInstance.getTaskId());
 					if (commentList.size()>0){
 						activitiHistoryTask.setApproves(commentList.get(0).getFullMessage());
 					}
+					List<Attachment> attachments = processEngine.getTaskService().getTaskAttachments(historicActivityInstance.getTaskId());
+					
+					
 				}
 				/**获取执行者*/
 				if(!StringUtils.isBlank(historicActivityInstance.getAssignee())&&!StringUtils.contains(historicActivityInstance.getAssignee(), ","))

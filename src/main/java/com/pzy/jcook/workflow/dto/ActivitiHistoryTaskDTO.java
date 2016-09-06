@@ -1,6 +1,9 @@
 package com.pzy.jcook.workflow.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import org.activiti.engine.task.Attachment;
 
 import com.pzy.jcook.sys.entity.User;
 
@@ -11,6 +14,9 @@ public class ActivitiHistoryTaskDTO {
 	private Date startTime;
 	private Date endTime;
 	private String approves;
+	
+	private List<Attachment> attachment;
+	
 	public String getName() {
 		return name;
 	}
@@ -41,4 +47,11 @@ public class ActivitiHistoryTaskDTO {
 	public void setApproves(String approves) {
 		this.approves = approves;
 	}
+	public List<Attachment> getAttachment() {
+		return attachment;
+	}
+	public void setAttachment(List<Attachment> attachment) {
+		this.attachment = attachment;
+	}
+	
 }

@@ -173,6 +173,7 @@ public class WorkitemController {
 								Boolean pass,String approvals,
 								Workitem workitem,
 								String handleusers,
+								String filesstr,
 								RedirectAttributes redirectAttributes ) {
 		Assert.isTrue(StringUtils.isBlank(handleusers), "没有选择任务处理人！");
 		ProcessInstance processInstance = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(prcessInstanceid).singleResult();
@@ -194,6 +195,8 @@ public class WorkitemController {
 			workitem.setReject(pass?0:1);
 			this.workitemService.save(workitem,handleusers);
 		} else if ("handle".equals(task.getTaskDefinitionKey())) {
+		//	processEngine.getTaskService().createAttachment(attachmentType, taskId, processInstanceId, attachmentName, attachmentDescription, content)
+			
 			processEngine.getTaskService().addComment(task.getId(), processInstance.getId(), approvals);
 			processEngine.getTaskService().complete(task.getId(), activtiMap);
 			this.workitemService.save(workitem);
