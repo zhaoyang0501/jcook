@@ -37,7 +37,11 @@
     <link href="${pageContext.request.contextPath}/css/plugins/chosen/chosen.css" rel="stylesheet">
       <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
       <link href="${pageContext.request.contextPath}/css/plugins/webuploader/webuploader.css" rel="stylesheet">
-      
+      <style type="text/css">
+      .error{
+       color: red;
+      }
+      </style>
 	</head>
 
 	<body class="no-skin">
@@ -89,7 +93,7 @@
 		                           			<tr>	
 		                           				<td>推荐组员</td>
 		                           				<td> 
-					                                <select name='applyusers' class="chzn-select " multiple  data-placeholder="推荐组员" class="chosen-select form-control"  tabindex="2">
+					                                <select  name='applyusers' class="chzn-select " multiple  data-placeholder="推荐组员" class="chosen-select form-control"  tabindex="2">
 					                                	<c:forEach items="${users }" var="user">
 					                                		<option value="${user.id }">${user.chinesename}</option>
 					                                	</c:forEach>
@@ -177,7 +181,10 @@
     <script src="${pageContext.request.contextPath}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	  <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
 	 <script src="${pageContext.request.contextPath}/plugins/webuploader/webuploader.js "></script>
+	 <script src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
 	</body>
+	
+	
 	<script>
     $.common.setContextPath('${pageContext.request.contextPath}');
 	<c:if test="${response.code=='1'}">
@@ -187,6 +194,25 @@
   
     
     $(document).ready(function(){
+    	
+    	$("form").validate({
+    	    rules: {
+    	    	title: "required",
+    	        remark: "required",
+    	        applyusers: "required"
+    	    },
+    	    ignore:"",
+    	    messages: {
+    	    	title: "请输入任务标题",
+    	    	remark: "请输入任务说明",
+    	    	beginDate:"请输入任务起始日期",
+    	    	endDate:"请输入任务结束日期",
+    	    	 applyusers: "请选择分配人员"
+    	    }
+    	});
+    	
+    	
+    	
     	$(".chzn-select").chosen({width:"100%"});
     	
     	var uploader = WebUploader.create({

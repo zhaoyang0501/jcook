@@ -75,6 +75,11 @@ public class WorkitemController {
 		return  "workitem/create";
 	}
 	
+	@RequestMapping(value="index")
+	public String index(Model model) {
+		return  "workitem/index";
+	}
+	
 	@RequestMapping("list")
 	@ResponseBody
 	public Response list(Integer start, Integer length, String value) {

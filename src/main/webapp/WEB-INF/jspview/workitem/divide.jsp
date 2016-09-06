@@ -36,6 +36,11 @@
 	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/plugins/chosen/chosen.css" rel="stylesheet">
       <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+       <style type="text/css">
+      .error{
+       color: red;
+      }
+      </style>
 	</head>
 
 	<body class="no-skin">
@@ -102,6 +107,7 @@
 			                           				<td>组长</td>
 			                           				<td> 
 						                                <select required="required"  name='leader.id' required="required" class="form-control"  >
+						                                	<option value=""></option>
 						                                	<c:forEach items="${users }" var="user">
 						                                		<option value="${user.id }">${user.chinesename}</option>
 						                                	</c:forEach>
@@ -199,9 +205,11 @@
     <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js?sf=1"></script>
     
-      <script src="${pageContext.request.contextPath}/js/plugins/chosen/chosen.jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/js/plugins/chosen/chosen.jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-	  <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
+	
 	</body>
 	<script>
     $.common.setContextPath('${pageContext.request.contextPath}');
@@ -212,6 +220,19 @@
   
     
     $(document).ready(function(){
+    	
+    	$("form").validate({
+    	    rules: {
+    	    	handleusers: "required",
+    	        "leader.id": "required"
+    	    },
+    	    ignore:"",
+    	    messages: {
+    	    	"leader.id": "请选择组长",
+    	    	handleusers: "请选择分配人员"
+    	    }
+    	});
+    	
     	 $(".chzn-select").chosen({width:"100%"});
      	
      	$(".date").datepicker({
