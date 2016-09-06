@@ -11,28 +11,28 @@
 	
 				<ul class="nav nav-list">
 					<li class="active"><a href="${pageContext.request.contextPath}/workflow/tasktodo"> <i
-							class="menu-icon fa fa-tachometer"></i> <span class="menu-text">
+							class="menu-icon fa fa-calendar"></i> <span class="menu-text">
 								我的待办 </span>
 					</a> <b class="arrow"></b></li>
 	
 					<li class=""><a href="${pageContext.request.contextPath}/workflow/taskdone"> <i
-							class="menu-icon fa fa-list-alt"></i> <span class="menu-text">
+							class="menu-icon fa fa-briefcase"></i> <span class="menu-text">
 								我的已办 </span>
 					</a> <b class="arrow"></b></li>
 	
 					<li class=""><a href="${pageContext.request.contextPath}/workitem/create"> <i
-							class="menu-icon fa fa-list-alt"></i> <span class="menu-text">
+							class="menu-icon fa  fa-pencil-square-o"></i> <span class="menu-text">
 								任务申请</span>
 					</a> <b class="arrow"></b></li>
 	
 					<li class=""><a href="${pageContext.request.contextPath}/user/index"> <i
-							class="menu-icon fa fa-list-alt"></i> <span class="menu-text">
+							class="menu-icon fa fa-users"></i> <span class="menu-text">
 								员工管理</span>
 					</a> <b class="arrow"></b></li>
 	
 	
 					<li class=""><a href="${pageContext.request.contextPath}/workitem/index"> <i
-							class="menu-icon fa fa-list-alt"></i> <span class="menu-text">任务监控</span>
+							class="menu-icon fa  fa-eye"></i> <span class="menu-text">任务监控</span>
 					</a> <b class="arrow"></b></li>
 				</ul>
 				<!-- /.nav-list -->

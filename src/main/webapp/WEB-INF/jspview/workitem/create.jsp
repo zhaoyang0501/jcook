@@ -51,7 +51,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active" >任务申请</li>
+							<li class="active" targeturl='${pageContext.request.contextPath}/workitem/create' >任务申请</li>
 						</ul>
 					</div>
 
@@ -205,7 +205,6 @@
     	});
     	uploader.on( 'uploadSuccess',  function(file, data){
     		 $( '#'+file.id ).find('p.state').text('已上传');
-    		 alert(data.datas.filepath);
     		 $( '#'+file.id ).find("input").val(data.datas.filepath);
     		    return false;
 		});
@@ -235,5 +234,11 @@
  			forceParse: 0
      		});
         });
+    
+    $(document).ready(function(){
+    	$(".nav-list li").removeClass("active");
+    	$(".nav-list a[href='"+$(".breadcrumb li[targeturl]").attr("targeturl")+"']").parent().addClass("active");
+    });
     </script>
+
 </html>

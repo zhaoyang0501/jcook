@@ -46,7 +46,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active">待办任务</li>
+							<li class="active" targeturl='${pageContext.request.contextPath}/workflow/taskdone' >任务详情</li>
 						</ul>
 					</div>
 
@@ -152,28 +152,7 @@
 		                           	
 									   <div class="col-sm-12 table-responsive">
 									     <h5>流程信息</h5>
-										<table id='dt_weekReport' class="responsive table table-striped table-bordered table-condensed">
-											<thead>
-												<tr>
-													<th>流程节点</th>
-													<th>处理人</th>
-													<th>开始时间</th>
-													<th>结束时间</th>
-													<th>处理意见</th>
-												</tr>
-											</thead>
-											<tbody>
-											<c:forEach items="${taskhistory}" var="item">
-													<tr>
-													<td>${item.name}</td>
-													<td>${item.user==null?"":item.user.chinesename}</td>
-													<td> <fmt:formatDate value="${item.startTime}" type="time" dateStyle="full" pattern="yyyy-MM-dd HH:mm"/></td>
-													<td> <fmt:formatDate value="${item.endTime}" type="time" dateStyle="full" pattern="yyyy-MM-dd HH:mm"/></td>
-													<td>${item.approves}</td>
-												</tr>
-											</c:forEach>
-											</tbody>
-										</table>
+											<%@include file="../workflow/history.jsp" %>
 		                          </div>
                         </div>
 				</div>

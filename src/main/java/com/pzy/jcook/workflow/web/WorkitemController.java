@@ -187,17 +187,15 @@ public class WorkitemController {
 								Boolean pass,String approvals,
 								Workitem workitem,
 								String handleusers,
-								String filesstr,
+								String filestr,
 								RedirectAttributes redirectAttributes ) {
-		if(StringUtils.isBlank(handleusers))
-			throw new RuntimeException("没有选择处理人");
 		ProcessInstance processInstance = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(prcessInstanceid).singleResult();
-
 		Task task = processEngine.getTaskService().createTaskQuery().taskId(taskid).singleResult();
-
 		Map<String, Object> activtiMap = new HashMap<String, Object>();
 		/** TODO 判断当前登录人是不是任务的拥有者 ***/
 		if ("divide".equals(task.getTaskDefinitionKey())) {
+			if(StringUtils.isBlank(handleusers))
+				throw new RuntimeException("没有选择处理人");
 			List<String> assigneeList = new ArrayList<String>();
 			Collections.addAll(assigneeList, handleusers.split(","));
 			activtiMap.put("assigneeList", assigneeList);
@@ -210,8 +208,8 @@ public class WorkitemController {
 			workitem.setReject(pass?0:1);
 			this.workitemService.save(workitem,handleusers);
 		} else if ("handle".equals(task.getTaskDefinitionKey())) {
-			if(StringUtils.isNotBlank(filesstr)){
-				for(String str:filesstr.split(",")){
+			if(StringUtils.isNotBlank(filestr)){
+				for(String str:filestr.split(",")){
 					processEngine.getTaskService().saveAttachment(processEngine.getTaskService().createAttachment("file", task.getId(), processInstance.getId(), str, str, str));
 				}
 			}

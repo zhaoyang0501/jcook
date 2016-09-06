@@ -46,7 +46,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active">待办任务</li>
+							<li class="active" targeturl='${pageContext.request.contextPath}/workflow/tasktodo'>待办任务</li>
 						</ul>
 					</div>
 
@@ -193,5 +193,11 @@
 	    		 $(".dataTables_processing").hide();	
 	     } )
     });
+    
+    $(document).ready(function(){
+    	$(".nav-list li").removeClass("active");
+    	$(".nav-list a[href='"+$(".breadcrumb li[targeturl]").attr("targeturl")+"']").parent().addClass("active");
+    });
+    
     </script>
 </html>

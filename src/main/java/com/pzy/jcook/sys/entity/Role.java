@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_role")
+@Table(name = "t_role1")
 public class Role extends BaseEntity<Long>{
 	
 	private String code;

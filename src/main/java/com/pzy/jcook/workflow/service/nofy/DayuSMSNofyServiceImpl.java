@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,7 +40,9 @@ public class DayuSMSNofyServiceImpl implements NofyService{
 	private String templateCode;
 	
 	private static final Logger log = LoggerFactory.getLogger(DayuSMSNofyServiceImpl.class);
+	
 	@Override
+	@Async
 	public void send(Map<String,Object> map)  {
 		log.info("使用阿里大于短息接口发送一条短息");
 		TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);

@@ -46,7 +46,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active">已办任务</li>
+							<li class="active" targeturl='${pageContext.request.contextPath}/workflow/taskdone'>已办任务</li>
 						</ul>
 					</div>
 
@@ -130,12 +130,9 @@
 	</body>
 	<script>
     $.common.setContextPath('${pageContext.request.contextPath}');
-    
     var table=null;
-  
-    
     $(document).ready(function(){
-        	$("#_new").click(function(){
+    	 	$("#_new").click(function(){
         		$("input[name='id']").val("");
  		    	$("input[name='chinesename']").val("");
  		    	$("radio[name='sex']").val("");
@@ -207,5 +204,10 @@
 		    		 $(".dataTables_processing").hide();	
 		     } )
         });
+    
+    $(document).ready(function(){
+    	$(".nav-list li").removeClass("active");
+    	$(".nav-list a[href='"+$(".breadcrumb li[targeturl]").attr("targeturl")+"']").parent().addClass("active");
+    });
     </script>
 </html>

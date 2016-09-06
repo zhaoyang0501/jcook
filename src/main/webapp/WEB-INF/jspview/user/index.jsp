@@ -47,7 +47,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active">员工管理</li>
+							<li class="active" targeturl='${pageContext.request.contextPath}/user/index'>员工管理</li>
 						</ul>
 					</div>
 
@@ -362,5 +362,9 @@
 		    		 $(".dataTables_processing").hide();	
 		     } )
         });
+    $(document).ready(function(){
+    	$(".nav-list li").removeClass("active");
+    	$(".nav-list a[href='"+$(".breadcrumb li[targeturl]").attr("targeturl")+"']").parent().addClass("active");
+    });
     </script>
 </html>

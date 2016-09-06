@@ -36,6 +36,7 @@
 	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/plugins/chosen/chosen.css" rel="stylesheet">
       <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+          <link href="${pageContext.request.contextPath}/css/plugins/webuploader/webuploader.css" rel="stylesheet">
 	</head>
 
 	<body class="no-skin">
@@ -49,7 +50,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active">任务处理</li>
+							<li class="active" targeturl='${pageContext.request.contextPath}/workflow/tasktodo' >任务处理</li>
 						</ul>
 					</div>
 
@@ -142,15 +143,30 @@
 													 <label>结果说明</label>
 														<textarea id="approvals" name="approvals" rows="2"  style="widows: 100%"  class="form-control"></textarea>
 												</div>
-											<div class="form-group">
-													 <label>上传附件</label>
-													<input name='file' type="file" class="form-control" />
-												</div>
-										
 												
 												 <div class="form-group">
-															    <button type="submit" class="btn btn-primary" onclick="$('#pass').val('true')">提交结果</button>
+												 
+												 <div class="row">
+												
+												
+												
+												<div class="col-xs-4 col-md-2">
+												 <div id="uploader" >
+													    <div id="thelist" class="uploader-list"></div>
+													    	<div class="row">
+													    		<div class="col-xs-12">
+													    			<div id="picker">选择文件</div>
+													    		</div>
+													    	</div>
+													</div>
 												</div>
+												
+												<div class="col-xs-8 col-md-10">
+													 <button type="submit" class="btn btn-primary" onclick="$('#pass').val('true')">提交结果</button>
+												</div>
+											</div>
+											
+																	</div>
 									</form>
 									</div>	  
 									
@@ -162,28 +178,7 @@
 									 <div class="page-header">
 												<h1>流程信息 </h1>
 											</div>
-										<table id='dt_weekReport' class="responsive table table-striped table-bordered table-condensed">
-											<thead>
-												<tr>
-													<th>流程节点</th>
-													<th>处理人</th>
-													<th>开始时间</th>
-													<th>结束时间</th>
-													<th>处理意见</th>
-												</tr>
-											</thead>
-											<tbody>
-											<c:forEach items="${taskhistory}" var="item">
-													<tr>
-													<td>${item.name}</td>
-													<td>${item.user==null?"":item.user.chinesename}</td>
-													<td> <fmt:formatDate value="${item.startTime}" type="time" dateStyle="full" pattern="yyyy-MM-dd HH:mm"/></td>
-													<td> <fmt:formatDate value="${item.endTime}" type="time" dateStyle="full" pattern="yyyy-MM-dd HH:mm"/></td>
-													<td>${item.approves}</td>
-												</tr>
-											</c:forEach>
-											</tbody>
-										</table>
+									<%@include file="../workflow/history.jsp" %>
 		                          </div>
                         </div>
                         </form>
@@ -228,6 +223,8 @@
       <script src="${pageContext.request.contextPath}/js/plugins/chosen/chosen.jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 	  <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
+	   <script src="${pageContext.request.contextPath}/plugins/webuploader/webuploader.js "></script>
+	  
 	</body>
 	<script>
     $.common.setContextPath('${pageContext.request.contextPath}');
@@ -238,8 +235,41 @@
   
     
     $(document).ready(function(){
-    	 $(".chzn-select").chosen({width:"100%"});
+    	
+    	$(".chzn-select").chosen({width:"100%"});
+    	
+    	var uploader = WebUploader.create({
+     		auto:true,
+     	    server: '${pageContext.request.contextPath}/fileupload/upload',
+     	    pick: '#picker',
+     	    resize: false
+     	});
      	
+     	uploader.on( 'fileQueued', function( file ) {
+     	    $("#uploader").append( '<div id="' + file.id + '" class="item">' +
+     	        '<h4 class="info">' + file.name + '</h4>' +
+     	        '<p class="state">等待上传...</p>' +
+     	       ' <input type="hidden" name="filestr" value=""/>'+
+     	       '</div>' );
+     	});
+     	
+     	uploader.on( 'uploadSuccess',  function(file, data){
+     		 $( '#'+file.id ).find('p.state').text('已上传');
+     		 $( '#'+file.id ).find("input").val(data.datas.filepath);
+     		    return false;
+ 		});
+
+     	 uploader.on( 'uploadError', function( file ) {
+     	    $( '#'+file.id ).find('p.state').text('上传出错');
+     	 });
+
+     	 uploader.on( 'uploadComplete', function( file ) {
+     	    $( '#'+file.id ).find('.progress').fadeOut();
+     	 });
+     	
+    	 $("#submitfile").on( 'click', function() {
+    		 uploader.upload();
+    	 });
      	$(".date").datepicker({
      		language:  'zh-CN',
  	        weekStart: 1,
@@ -252,5 +282,9 @@
  			forceParse: 0
      		});
         });
+    $(document).ready(function(){
+    	$(".nav-list li").removeClass("active");
+    	$(".nav-list a[href='"+$(".breadcrumb li[targeturl]").attr("targeturl")+"']").parent().addClass("active");
+    });
     </script>
 </html>

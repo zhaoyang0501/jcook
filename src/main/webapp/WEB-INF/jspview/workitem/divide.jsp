@@ -49,10 +49,9 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active">任务分配</li>
+							<li class="active" targeturl='${pageContext.request.contextPath}/workflow/tasktodo'  >任务分配</li>
 						</ul>
 					</div>
-
 				<div class="page-content">
 			               <form class="form-horizontal" action="${pageContext.request.contextPath}/workitem/doapprove/${task.id}/${prcessInstanceid}" method="post">
 			                                  
@@ -158,28 +157,7 @@
 									 <div class="page-header">
 												<h1>流程信息 </h1>
 											</div>
-										<table id='dt_weekReport' class="responsive table table-striped table-bordered table-condensed">
-											<thead>
-												<tr>
-													<th>流程节点</th>
-													<th>处理人</th>
-													<th>开始时间</th>
-													<th>结束时间</th>
-													<th>处理意见</th>
-												</tr>
-											</thead>
-											<tbody>
-											<c:forEach items="${taskhistory}" var="item">
-													<tr>
-													<td>${item.name}</td>
-													<td>${item.user==null?"":item.user.chinesename}</td>
-													<td> <fmt:formatDate value="${item.startTime}" type="time" dateStyle="full" pattern="yyyy-MM-dd HH:mm"/></td>
-													<td> <fmt:formatDate value="${item.endTime}" type="time" dateStyle="full" pattern="yyyy-MM-dd HH:mm"/></td>
-													<td>${item.approves}</td>
-												</tr>
-											</c:forEach>
-											</tbody>
-										</table>
+										<%@include file="../workflow/history.jsp" %>
 		                          </div>
                         </div>
                         </form>
@@ -248,5 +226,9 @@
  			forceParse: 0
      		});
         });
+    $(document).ready(function(){
+    	$(".nav-list li").removeClass("active");
+    	$(".nav-list a[href='"+$(".breadcrumb li[targeturl]").attr("targeturl")+"']").parent().addClass("active");
+    });
     </script>
 </html>
