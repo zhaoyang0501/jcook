@@ -198,7 +198,11 @@ public class WorkitemController {
 			workitem.setReject(pass?0:1);
 			this.workitemService.save(workitem,handleusers);
 		} else if ("handle".equals(task.getTaskDefinitionKey())) {
-		//	processEngine.getTaskService().createAttachment(attachmentType, taskId, processInstanceId, attachmentName, attachmentDescription, content)
+			if(StringUtils.isNotBlank(filesstr)){
+				for(String str:filesstr.split(",")){
+					processEngine.getTaskService().saveAttachment(processEngine.getTaskService().createAttachment("file", task.getId(), processInstance.getId(), str, str, str));
+				}
+			}
 			
 			processEngine.getTaskService().addComment(task.getId(), processInstance.getId(), approvals);
 			processEngine.getTaskService().complete(task.getId(), activtiMap);
