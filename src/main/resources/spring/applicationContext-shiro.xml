@@ -88,6 +88,9 @@
 				  /loginout=logout
 				  /gologin=authc
 				  /index=authc
+				   /workflow/**=authc
+				  /workitem/**=authc
+				  /user/**=authc
 			</value>
 		</property>
 	</bean>

@@ -15,6 +15,7 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.SecurityUtils;
@@ -39,6 +40,7 @@ import com.pzy.jcook.dto.json.Response;
 import com.pzy.jcook.dto.json.SuccessResponse;
 import com.pzy.jcook.sys.entity.User;
 import com.pzy.jcook.sys.service.UserService;
+import com.pzy.jcook.workflow.dto.WorkItemDTO;
 import com.pzy.jcook.workflow.entity.Workitem;
 import com.pzy.jcook.workflow.service.WorkFlowService;
 import com.pzy.jcook.workflow.service.WorkitemService;
@@ -86,7 +88,13 @@ public class WorkitemController {
 		int pageNumber = (int) (start / length) + 1;
 		int pageSize = length;
 		Page<Workitem> m = workitemService.findAll(pageNumber, pageSize, value,"title");
-		return new DataTableResponse<Workitem>( m.getContent(),(int) m.getTotalElements());
+		List<WorkItemDTO> dtos = new ArrayList<WorkItemDTO>();
+		if(CollectionUtils.isNotEmpty(m.getContent())){
+			for(Workitem bean:m.getContent()){
+				dtos.add(workitemService.converToDto(bean));
+			}
+		}
+		return new DataTableResponse<WorkItemDTO>( dtos,(int) m.getTotalElements());
 	}
 	/***
 	 * 提交单据并发起流程
