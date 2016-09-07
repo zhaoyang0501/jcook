@@ -34,6 +34,11 @@
 		<script src="${pageContext.request.contextPath}/assets/js/respond.min.js"></script>
 		<![endif]-->
 		   <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+		<style type="text/css">
+		   .error{
+       color: red;
+      }
+      </style>
 	</head>
 
 	<body class="no-skin">
@@ -99,7 +104,7 @@
 				   <div id='_form' style="display: none;">
  		 <div class="row">
                             <div class="col-sm-12 table-responsive ">
-		                           <form class="form-horizontal" action="" method="get">
+		                           <form  id='form_' class="form-horizontal" action="" method="get">
 		                           <input name='id' type="hidden"/>
 		                           	<table class='table table-bordered'>
 		                           		<thead>
@@ -173,7 +178,6 @@
 		                           				<td colspan="6"> 
 		                           					 <div class="col-sm-4 col-sm-offset-2">
 		                                  			  		<button class="btn btn-primary" type="button" onclick="submit_form()">提交</button>
-		                                   				    <button class="btn " type="submit">取消</button>
 		                               				 </div>
 		                           				</td>
 		                           			</tr>
@@ -222,7 +226,7 @@
     <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js?sf=1"></script>
       <script src="${pageContext.request.contextPath}/js/plugins/layer/layer.js"></script>
-  
+   <script src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
 	</body>
 	<script>
 	 <c:if test="${state=='success'}">
@@ -232,8 +236,19 @@
     $.common.setContextPath('${pageContext.request.contextPath}');
     
     var table=null;
-    
+    var form_=$("#form_").validate({
+	    rules: {
+	    	chinesename: "required",
+	    	username: "required"
+	    },
+	    ignore:"",
+	    messages: {
+	    	chinesename: "姓名必须填写",
+	    	username: "手机号码必须填写"
+	    }
+	});
     function submit_form(){
+    	if(!form_.form()) return ;
     	$.ajax({
     		   type: "POST",
     		   url:  $.common.getContextPath() + "/user/save",
@@ -291,7 +306,7 @@
       			  type: 1,
       			  skin: 'layui-layer-rim', 
       			  content: $("#_form"),
-      			  area: "800px"
+      			  area: "650px"
       			});
  		     }
  		   }
@@ -299,6 +314,10 @@
      }
     
     $(document).ready(function(){
+    	
+   
+    	
+    	
         	$("#_new").click(function(){
         		$("input[name='id']").val("");
  		    	$("input[name='chinesename']").val("");

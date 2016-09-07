@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -45,11 +47,22 @@ public class WorkitemService extends BaseService<Workitem, Long> {
 	public WorkItemDTO converToDto(Workitem workitem){
 		List<Task> tasks = processEngine.getTaskService().createTaskQuery().processInstanceBusinessKey(String.valueOf(workitem.getId())).orderByTaskCreateTime().desc().list();
 		WorkItemDTO dto = new WorkItemDTO(workitem);
-		if(CollectionUtils.isEmpty(tasks)){
-			dto.setState(WorkItemDTO.STATE_END);
-		}else{
+		if(CollectionUtils.isNotEmpty(tasks)){
 			dto.setStep(tasks.get(0).getName());
 		}
+		ProcessInstance processInstance=processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(workitem.getId())).singleResult();
+		if(processInstance!=null){
+			dto.setProcessInstanceId(processInstance.getId());
+			dto.setState(WorkItemDTO.STATE_RUNING);
+		}
+		
+		HistoricProcessInstance p = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(workitem.getId())).singleResult();
+		if(p!=null&&p.getEndTime()!=null){
+			dto.setProcessInstanceId(p.getId());
+			dto.setEndDate(p.getEndTime());
+			dto.setState(WorkItemDTO.STATE_END);
+		}
+			
 		return dto;
 	}
 	

@@ -79,7 +79,6 @@
 											<th>收到日期</th>
 											<th>提交人</th>
 											<th>当前步骤</th>
-											<th>状态</th>
 											<th>操作</th>
 										</tr>
 		                            </thead>
@@ -161,8 +160,6 @@
 			},{
 				"data" : "stepName",
 			},{
-				"data" : "state",
-			},{
 				"data" : "id",
 			}] ,
 			 "columnDefs": [
@@ -170,7 +167,7 @@
 			                    "render": function ( data, type, row ) {
 			                        return  "<a class='J_menuItem' tager='_blank' data-index='"+row.stepId+"' href='${pageContext.request.contextPath}/workflow/task/"+row.stepId+"/"+row.processInstanceId+"' >处理</a>";
 			                    },
-			                    "targets":5
+			                    "targets":4
 			                },
 			                {
 			                    "render": function ( data, type, row ) {
