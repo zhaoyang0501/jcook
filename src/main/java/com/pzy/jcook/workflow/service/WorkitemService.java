@@ -17,8 +17,12 @@ public class WorkitemService extends BaseService<Workitem, Long> {
 	@Autowired
 	private UserRepository userRepository;
 	
+	/***
+	 * 连同推荐组员一起保存
+	 * @param workitem
+	 * @param applyuserids
+	 */
 	public void save(Workitem workitem,String applyuserids){
-
 		if(StringUtils.isNotBlank(applyuserids)){
 			Set<User> users = new HashSet<User>();
 			String[] userids = applyuserids.split(",");
@@ -31,7 +35,11 @@ public class WorkitemService extends BaseService<Workitem, Long> {
 	}
 	
 	
-
+	/***
+	 * 连同处理人员一起保存
+	 * @param workitem
+	 * @param applyuserids
+	 */
 	public void saveHanderUser(Workitem workitem,String applyuserids){
 
 		if(StringUtils.isNotBlank(applyuserids)){

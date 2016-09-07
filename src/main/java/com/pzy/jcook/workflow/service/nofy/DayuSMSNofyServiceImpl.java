@@ -39,11 +39,16 @@ public class DayuSMSNofyServiceImpl implements NofyService{
 	@Value("${spring.dayusms.templateCode}")
 	private String templateCode;
 	
+	@Value("${spring.dayusms.isSend}")
+	private Boolean isSend;
+	
 	private static final Logger log = LoggerFactory.getLogger(DayuSMSNofyServiceImpl.class);
 	
 	@Override
 	@Async
 	public void send(Map<String,Object> map)  {
+		if(!isSend)
+			return ;
 		log.info("使用阿里大于短息接口发送一条短息");
 		TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);
 		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();

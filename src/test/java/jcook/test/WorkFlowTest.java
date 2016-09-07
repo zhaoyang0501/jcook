@@ -2,6 +2,8 @@ package jcook.test;
 
 import java.io.InputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,8 +49,6 @@ public class WorkFlowTest {
 	private WorkitemService workitemService;
 	@Autowired
 	BaseService<Workitem,Long> baseService;
-	@Autowired
-	private RestTemplate restTemplate;
 	
 	@Autowired
 	UserService userService ;
@@ -65,7 +65,16 @@ public class WorkFlowTest {
 		Page<ActivitDTO> list= workFlowService.findTaskTodo(null, null, null, null, null, null, 1l, 0, 23);
 		System.out.println(list.getContent().size());
 	}
-	
+	@Test
+	public void submitTask(){
+		List<String> assigneeList = new ArrayList<String>();
+		Map<String, Object> activtiMap = new HashMap<String, Object>();
+		
+		Collections.addAll(assigneeList, "1,2".split(","));
+		activtiMap.put("assigneeList", assigneeList);
+		activtiMap.put("pass", true);
+		processEngine.getTaskService().complete("37669",activtiMap);
+	}
 	@Test
 	public void deploy(){
 		InputStream in = this.getClass().getClassLoader().getResourceAsStream("processes/workitem.zip");  
@@ -101,8 +110,8 @@ public class WorkFlowTest {
 		Map<String ,Object> urlVariables = new HashMap<String ,Object>(); 
 		urlVariables.put("url", "www.baidu.com"); 
 		
-		String dto = this.restTemplate.getForObject("http://www.cnbeta.com", null, String.class,urlVariables);
-		System.out.println(dto);
+		//String dto = this.restTemplate.getForObject("http://www.cnbeta.com", null, String.class,urlVariables);
+		//System.out.println(dto);
 	}
 	@Test
 	public void testjson(){

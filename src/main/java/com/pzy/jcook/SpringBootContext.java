@@ -7,9 +7,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAutoConfiguration
+@EnableAsync
 @EnableJpaRepositories({"com.pzy.jcook.sys.repository","com.pzy.jcook.workflow.repository"})
 @ImportResource( {"classpath:spring/applicationContext-shiro.xml"} ) 
 public class SpringBootContext extends SpringBootServletInitializer {

@@ -18,7 +18,7 @@ public class LoginController {
 	public String login(Model model) {
 		Subject subject = SecurityUtils.getSubject();
 		if(subject.isAuthenticated()||subject.isRemembered()){
-			return "dologin";
+			return "index";
 		} 
 		  return "login";
 	}
@@ -46,7 +46,7 @@ public class LoginController {
 	@RequestMapping(value = "/loginout", method = RequestMethod.GET)
 	public String loginout(Model model) {
 		SecurityUtils.getSubject().logout();
-		return "dologin";
+		return "login";
 	}
 	
 	@RequestMapping(value = {"/","","index"}, method = RequestMethod.GET)

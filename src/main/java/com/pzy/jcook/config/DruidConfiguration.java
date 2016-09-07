@@ -14,7 +14,11 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 
-
+/***
+ *数据源配置等 druid
+ * @author panchaoyang
+ *
+ */
 @Configuration
 public class DruidConfiguration {
 	@Bean

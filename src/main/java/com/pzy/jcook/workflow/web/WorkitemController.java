@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.pzy.jcook.dto.json.DataTableResponse;
 import com.pzy.jcook.dto.json.Response;
 import com.pzy.jcook.dto.json.SuccessResponse;
@@ -43,8 +42,9 @@ import com.pzy.jcook.sys.service.UserService;
 import com.pzy.jcook.workflow.entity.Workitem;
 import com.pzy.jcook.workflow.service.WorkFlowService;
 import com.pzy.jcook.workflow.service.WorkitemService;
+
 /***
- * 代办已办 签收 等动作
+ * 任务单据的相关操作
  * @author panchaoyang
  *
  */
@@ -86,7 +86,7 @@ public class WorkitemController {
 		int pageNumber = (int) (start / length) + 1;
 		int pageSize = length;
 		Page<Workitem> m = workitemService.findAll(pageNumber, pageSize, value,"title");
-		return new DataTableResponse<Workitem>( m.getContent(),(int) m.getTotalElements() );
+		return new DataTableResponse<Workitem>( m.getContent(),(int) m.getTotalElements());
 	}
 	/***
 	 * 提交单据并发起流程
@@ -197,6 +197,7 @@ public class WorkitemController {
 		ProcessInstance processInstance = processEngine.getRuntimeService().createProcessInstanceQuery().processInstanceId(prcessInstanceid).singleResult();
 		Task task = processEngine.getTaskService().createTaskQuery().taskId(taskid).singleResult();
 		Map<String, Object> activtiMap = new HashMap<String, Object>();
+		
 		/** TODO 判断当前登录人是不是任务的拥有者 ***/
 		if ("divide".equals(task.getTaskDefinitionKey())) {
 			if(StringUtils.isBlank(handleusers))
@@ -213,6 +214,7 @@ public class WorkitemController {
 			workitem.setReject(pass?0:1);
 			this.workitemService.save(workitem,handleusers);
 		} else if ("handle".equals(task.getTaskDefinitionKey())) {
+			/**上传附件*/
 			if(StringUtils.isNotBlank(filestr)){
 				for(String str:filestr.split(",")){
 					processEngine.getTaskService().saveAttachment(processEngine.getTaskService().createAttachment("file", task.getId(), processInstance.getId(), str, str, str));
@@ -227,6 +229,7 @@ public class WorkitemController {
 		redirectAttributes.addFlashAttribute("response", new SuccessResponse("操作成功"));
 		return "redirect:/workitem/taskhistory/" + prcessInstanceid;
 	}
+	
 	@ModelAttribute
 	public Workitem preget(@RequestParam(required=false) Long id) {
 		Workitem workitem = new Workitem();

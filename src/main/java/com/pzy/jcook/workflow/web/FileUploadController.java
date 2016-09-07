@@ -17,6 +17,11 @@ import com.pzy.jcook.dto.json.FailedResponse;
 import com.pzy.jcook.dto.json.ObjectResponse;
 import com.pzy.jcook.dto.json.Response;
 import com.pzy.jcook.workflow.dto.FileUploadDTO;
+/***
+ * 文件上传控制器
+ * @author panchaoyang
+ *
+ */
 @Controller
 @RequestMapping("fileupload")
 public class FileUploadController {
