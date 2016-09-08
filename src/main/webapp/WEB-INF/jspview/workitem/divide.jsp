@@ -106,7 +106,7 @@
 			                           			<tr>	
 			                           				<td>组长</td>
 			                           				<td> 
-						                                <select  name='leader.id'  class="form-control" class="chosen-select" >
+						                                <select  name='leader.id'   class="form-control" >
 						                                	<option value=""></option>
 						                                	<c:forEach items="${users }" var="user">
 						                                		<option value="${user.id }">${user.chinesename}</option>

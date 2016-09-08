@@ -55,11 +55,8 @@
 					</div>
 
 				<div class="page-content">
-			               <form class="form-horizontal" action="${pageContext.request.contextPath}/workitem/doapprove/${task.id}/${prcessInstanceid}" method="post">
 						<div class="row">
                             <div class="col-sm-12 table-responsive ">
-			                           	<input type="hidden" name="id" value="${bean.id }"/>
-			                           	<input type="hidden" id="pass" name="pass" value="true"/>
 			                           	<table class='table table-bordered'>
 			                           		<thead>
 			                           			<tr  ><th style="text-align: center;" colspan="2" >任务详情</th></tr>
@@ -139,34 +136,35 @@
 											<h1>处理意见 </h1>
 										</div>
 										<form role="form" action="${pageContext.request.contextPath}/workitem/doapprove/${task.id}/${prcessInstanceid}" method="post">
+											 	<input type="hidden" name="id" value="${bean.id }"/>
+			                           	<input type="hidden" id="pass" name="pass" value="true"/>
 											  <div class="form-group">
 													 <label>结果说明</label>
 														<textarea id="approvals" name="approvals" rows="2"  style="widows: 100%"  class="form-control"></textarea>
 												</div>
 												
 												 <div class="form-group">
-												 
+												 <div class="container-fluid">
+														  <div id="thelist" class="row ">
+														  </div>
+														</div>
 												 <div class="row">
-												
-												
-												
-												<div class="col-xs-4 col-md-2">
-												 <div id="uploader" >
-													    <div id="thelist" class="uploader-list"></div>
-													    	<div class="row">
-													    		<div class="col-xs-12">
-													    			<div id="picker">选择文件</div>
-													    		</div>
-													    	</div>
+													<div class="col-xs-4 col-md-2">
+													 <div id="uploader" >
+														    	<div class="row">
+														    		<div class="col-xs-12">
+														    			<div id="picker">选择文件</div>
+														    		</div>
+														    	</div>
+														</div>
 													</div>
-												</div>
 												
 												<div class="col-xs-8 col-md-10">
 													 <button type="submit" class="btn btn-primary" onclick="$('#pass').val('true')">提交结果</button>
 												</div>
 											</div>
 											
-																	</div>
+												</div>
 									</form>
 									</div>	  
 									
@@ -181,7 +179,6 @@
 									<%@include file="../workflow/history.jsp" %>
 		                          </div>
                         </div>
-                        </form>
 				</div>
 				<!-- /.page-content -->
 			</div><!-- /.main-content -->
@@ -246,11 +243,26 @@
      	});
      	
      	uploader.on( 'fileQueued', function( file ) {
-     	    $("#uploader").append( '<div id="' + file.id + '" class="item">' +
-     	        '<h4 class="info">' + file.name + '</h4>' +
-     	        '<p class="state">等待上传...</p>' +
-     	       ' <input type="hidden" name="filestr" value=""/>'+
-     	       '</div>' );
+
+   		 var $li = $(
+   		            '<div id="' + file.id + '" class="col-xs-12 col-sm-2 file-item thumbnail">' +
+   		                '<img>' +
+   		                '<div class="info">' + file.name + '</div>' +
+   		                '<p class="state">等待上传...</p>' +
+   		     	       ' <input type="hidden" name="filestr" value=""/>'+
+   		            '</div>'
+   		            ),
+   		        $img = $li.find('img');
+   		    $("#thelist").append( $li );
+   		
+   		    uploader.makeThumb( file, function( error, src ) {
+   		        if ( error ) {
+   		            $img.replaceWith('<span>不能预览</span>');
+   		            return;
+   		        }
+
+   		        $img.attr( 'src', src );
+   		    }, 100, 100 );
      	});
      	
      	uploader.on( 'uploadSuccess',  function(file, data){

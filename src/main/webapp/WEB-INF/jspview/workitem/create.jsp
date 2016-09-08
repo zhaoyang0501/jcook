@@ -105,7 +105,11 @@
 		                           				<td>附件</td>
 		                           				<td> 
 							                        <div id="uploader" >
-													    <div id="thelist" class="uploader-list"></div>
+							                          
+							                          <div class="container-fluid">
+														  <div id="thelist" class="row ">
+														  </div>
+														</div>
 													    	
 													    	<div class="row">
 													    		<div class="col-xs-12">
@@ -223,11 +227,26 @@
     	});
     	
     	uploader.on( 'fileQueued', function( file ) {
-    	    $("#uploader").append( '<div id="' + file.id + '" class="item">' +
-    	        '<h4 class="info">' + file.name + '</h4>' +
-    	        '<p class="state">等待上传...</p>' +
-    	       ' <input type="hidden" name="filestr" value=""/>'+
-    	       '</div>' );
+    		
+    		 var $li = $(
+    		            '<div id="' + file.id + '" class="col-xs-12 col-sm-2 file-item thumbnail">' +
+    		                '<img>' +
+    		                '<div class="info">' + file.name + '</div>' +
+    		                '<p class="state">等待上传...</p>' +
+    		     	       ' <input type="hidden" name="filestr" value=""/>'+
+    		            '</div>'
+    		            ),
+    		        $img = $li.find('img');
+    		    $("#thelist").append( $li );
+    		
+    		    uploader.makeThumb( file, function( error, src ) {
+    		        if ( error ) {
+    		            $img.replaceWith('<span>不能预览</span>');
+    		            return;
+    		        }
+
+    		        $img.attr( 'src', src );
+    		    }, 100, 100 );
     	});
     	uploader.on( 'uploadSuccess',  function(file, data){
     		 $( '#'+file.id ).find('p.state').text('已上传');
