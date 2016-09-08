@@ -23,7 +23,7 @@ public class User extends BaseEntity<Long>{
 	
 	private String tel;
 	
-	private String chinesename;
+	private String chinesename ="";
 	
 	private String sex;
 	

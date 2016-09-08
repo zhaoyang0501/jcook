@@ -335,15 +335,31 @@
 				},{
 					"data" : "state",
 				},{
-					"data" : "id",
+					"data" : "processInstanceId",
 				}] ,
 				 "columnDefs": [
 				                {
 				                    "render": function ( data, type, row ) {
-				                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>查看 </a>";
+				                    	if(data== null)
+				                    		return "";
+				                    	else
+				                      		return   "<a href='${pageContext.request.contextPath}/workitem/taskhistory/"+data+"' >查看 </a>";
 				                    },
 				                    "targets":7
-				                }
+				                } ,{
+				                    "render": function ( data, type, row ) {
+				                    	if(data=='进行中')
+				                       	 return  "<span class='label label-danger '>"+data+"</span>";
+				                        else
+				                        	return  "<span class='label label-primary'>"+data+"</span>";
+				                    },
+				                    "targets":6
+				                }, {
+				                    "render": function ( data, type, row ) {
+				                        return  "<span class='label label-primary'>"+data+"</span>";
+				                    },
+				                    "targets":3
+				                },
 				               
 				            ],
         		"initComplete": function () {
@@ -354,7 +370,7 @@
         		} 
         	 } ).on('preXhr.dt', function ( e, settings, data ) {
 		        	data.value = $("#_name").val();
-		        	data.columnname = 'chinesename';
+		        	data.columnname = 'title';
 		        	return true;
 		     } ).on('xhr.dt', function ( e, settings, json, xhr ) {
 		    		 $(".dataTables_processing").hide();	

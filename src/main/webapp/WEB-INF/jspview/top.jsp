@@ -62,7 +62,7 @@
 								</li>
 
 								<li>
-									<a href="${pageContext.request.contextPath}/changepw">
+									<a href="${pageContext.request.contextPath}/user/changepw">
 										<i class="ace-icon fa fa-user"></i>
 										修改密码
 									</a>

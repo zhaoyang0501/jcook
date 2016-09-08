@@ -33,6 +33,12 @@
 		<script src="${pageContext.request.contextPath}/assets/js/html5shiv.min.js"></script>
 		<script src="${pageContext.request.contextPath}/assets/js/respond.min.js"></script>
 		<![endif]-->
+		   <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+		<style type="text/css">
+		   .error{
+       color: red;
+      }
+      </style>
 	</head>
 
 	<body class="no-skin">
@@ -46,49 +52,58 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="#">首页</a>
 							</li>
-							<li class="active" targeturl='${pageContext.request.contextPath}/workflow/tasktodo'>待办任务</li>
+							<li class="active" targeturl='${pageContext.request.contextPath}/user/index'>修改密码</li>
 						</ul>
 					</div>
 
 				<div class="page-content">
 						<div class="row">
-							<div class="col-sm-12">
-								<div class="page-header page-header-revise">
-									<form role="form" class="form-inline">
-										<div class="form-group">
-											<div class="input-group">
-												<input type="text"  id="_name"
-													placeholder="事项名称" class="form-control ">
-												<span class="input-group-btn">
-													<button class="btn btn-purple btn-sm" id="_search" type="button">
-														<i class="icon-search icon-on-right "></i> 搜索
-													</button>
-												</span>
-											</div>
-										</div>
-									</form>
-                        </form>
-									
-								</div>
+							<div class="col-xs-12">
+								<form  id='_form' class="form-horizontal" role="form" method="post" action="${pageContext.request.contextPath}/user/changepw" >
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">原始密码 </label>
 
-								<div class="table-responsive ">
-								<table ID='dt_table_view'class="table  table-bordered table-hover">  
-								 <thead>
-		                                <tr>
-											<th>事项名称</th>
-											<th>收到日期</th>
-											<th>提交人</th>
-											<th>当前步骤</th>
-											<th>操作</th>
-										</tr>
-		                            </thead>
-		                       		 <tbody>
-		                            </tbody>
-		                          </table>
-							</div>
+										<div class="col-sm-9">
+											<input type="password" name='oldpw'placeholder="原始密码 " class="col-xs-10 col-sm-5">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> 新密码</label>
+
+										<div class="col-sm-9">
+											<input type="password" name='newpw'  placeholder="新密码" class="col-xs-10 col-sm-5">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> 新密码确认</label>
+
+										<div class="col-sm-9">
+											<input type="password" name='newpwa' placeholder="新密码确认"  class="col-xs-10 col-sm-5">
+										</div>
+									</div>
+									
+									
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="ace-icon fa fa-check bigger-110"></i>
+												提交
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="ace-icon fa fa-undo bigger-110"></i>
+												取消
+											</button>
+										</div>
+									</div>
+								</form>
 						</div>
 				</div>
-				<!-- /.page-content -->
+				
+			<!-- /.page-content -->
 			</div><!-- /.main-content -->
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
@@ -124,77 +139,52 @@
     <script src="${pageContext.request.contextPath}/js/common.js?v=1.0.0"></script>
     <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js?sf=1"></script>
+      <script src="${pageContext.request.contextPath}/js/plugins/layer/layer.js"></script>
+   <script src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
 	</body>
 	<script>
+	<c:if test="${response!=null}">
+
+		<c:if test="${response.code=='1'}">
+		  toastr.success('${response.msg}');
+		 </c:if>
+		 
+		 <c:if test="${response.code!='1'}">
+		  toastr.warning('${response.msg}');
+		 </c:if>
+	 </c:if>
     $.common.setContextPath('${pageContext.request.contextPath}');
-    var table=null;
-    $(document).ready(function(){
-    	$("#_new").click(function(){
-    		$("input[name='id']").val("");
-		    	$("input[name='chinesename']").val("");
-		    	$("radio[name='sex']").val("");
-		   		$("input[name='username']").val("");
-				$("input[name='tel']").val("");
-				$("input[name='email']").val("");
-				$("textarea[name='remark']").val("");
-    		layer.open({
-    			  type: 1,
-    			  skin: 'layui-layer-rim', //加上边框
-    			  content: $("#_form"),
-    			  area: "800px"
-    			});
-    	});
-    	table=$('#dt_table_view').DataTable( {
-    		"dom": "rt<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            "ajax": {
-                "url":  $.common.getContextPath() + "/workflow/tasktodolist",
-                "type": "POST",
-                "dataSrc": "datas"
-              },
-			"columns" : [{
-				"data" : "title"
-			}, {
-				"data" : "createDate"
-			},{
-				"data" : "creater.chinesename",
-			},{
-				"data" : "stepName",
-			},{
-				"data" : "id",
-			}] ,
-			 "columnDefs": [
-			                {
-			                    "render": function ( data, type, row ) {
-			                        return  "<a class='J_menuItem' tager='_blank' data-index='"+row.stepId+"' href='${pageContext.request.contextPath}/workflow/task/"+row.stepId+"/"+row.processInstanceId+"' >处理</a>";
-			                    },
-			                    "targets":4
-			                },
-			                {
-			                    "render": function ( data, type, row ) {
-			                        return  "<span class='label label-primary'>"+data+"</span>";
-			                    },
-			                    "targets":3
-			                }
-			               
-			            ],
-    		"initComplete": function () {
-    			var api = this.api();
-    			$("#_search").on("click", function(){
-        		 	api.draw();
-    			} );
-    		} 
-    	 } ).on('preXhr.dt', function ( e, settings, data ) {
-	        	data.name = $("#_name").val();
-	        	return true;
-	     } ).on('xhr.dt', function ( e, settings, json, xhr ) {
-	    		 $(".dataTables_processing").hide();	
-	     } )
-    });
+    
+   
+    $("#_form").validate({
+	    rules: {
+	    	oldpw: "required",
+	    	
+	    	 newpw: {
+	            required: true,
+	            minlength: 6
+	          },
+	    	
+	          newpwa: {
+	            equalTo: "input[name='newpw']"
+	          },
+	    },
+	    ignore:"",
+	    messages: {
+	    	oldpw: "原始密码必须填写",
+	    	newpw:{
+	    		required:"新密码必须填写",
+	    		minlength:"密码至少6位",
+	    	},
+	    	newpwa: {
+	    		equalTo:"两次密码不一致",
+	    	}
+	    }
+	});
     
     $(document).ready(function(){
     	$(".nav-list li").removeClass("active");
     	$(".nav-list a[href='"+$(".breadcrumb li[targeturl]").attr("targeturl")+"']").parent().addClass("active");
     });
-    
     </script>
 </html>

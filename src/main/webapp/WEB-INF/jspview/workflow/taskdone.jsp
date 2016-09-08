@@ -183,9 +183,9 @@
 				                {
 				                    "render": function ( data, type, row ) {
 				                    	if(data=='进行中')
-				                       	 return  "<span class='label label-primary'>"+data+"</span>";
+				                       	 return  "<span class='label label-danger '>"+data+"</span>";
 				                        else
-				                        	return  "<span class='label label-danger'>"+data+"</span>";
+				                        	return  "<span class='label label-primary'>"+data+"</span>";
 				                    },
 				                    "targets":4
 				                }

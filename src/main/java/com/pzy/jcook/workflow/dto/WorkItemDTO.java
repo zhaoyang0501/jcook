@@ -2,6 +2,7 @@ package com.pzy.jcook.workflow.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pzy.jcook.sys.entity.User;
 import com.pzy.jcook.workflow.entity.Workitem;
 
@@ -14,15 +15,17 @@ public class WorkItemDTO {
 	private Long id;
 	private String title;
 	private User leader;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
 	private Date createDate;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
 	private Date endDate;
-	private String step;
+	private String step ="";
 	private String state;
-	
+	private String  processInstanceId;
 	public WorkItemDTO(Workitem workItem){
 		this.id=workItem.getId();
 		this.title = workItem.getTitle();
-		this.leader = workItem.getLeader();
+		this.leader = workItem.getLeader()==null?new User(): workItem.getLeader();
 		this.createDate = workItem.getCreateDate();
 		this.state= STATE_RUNING;
 	}
@@ -31,6 +34,13 @@ public class WorkItemDTO {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
 	}
 	public String getTitle() {
 		return title;
