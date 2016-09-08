@@ -47,7 +47,7 @@
                     <p class="m-t-md">任务分配系统</p>
                     <input type="text" name='username' class="form-control uname" placeholder="用户名" />
                     <input type="password" name='password' class="form-control pword m-b" placeholder="密码" />
-                    <a href="">忘记密码了？</a>
+                    <span style="color: red;">${tip }</span>
                     <button class="btn btn-success btn-block">登录</button>
                 </form>
             </div>
