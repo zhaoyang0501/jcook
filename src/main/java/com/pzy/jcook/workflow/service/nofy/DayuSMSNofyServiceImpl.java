@@ -72,7 +72,7 @@ public class DayuSMSNofyServiceImpl implements NofyService{
 	private String buildParamString(Map<String,Object> map) throws JsonProcessingException{
 		Map<String,Object> newmap = new HashMap<String,Object>();
 		newmap.put("username", map.get("username"));
-		newmap.put("taskurl", map.get("taskname"));
+		newmap.put("taskname", map.get("taskname"));
 		ObjectMapper mapper = new ObjectMapper(); 
 		String paramstr = mapper.writeValueAsString(newmap);
 		return paramstr;

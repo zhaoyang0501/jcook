@@ -7,6 +7,7 @@ import org.activiti.engine.delegate.event.ActivitiEvent;
 import org.activiti.engine.delegate.event.ActivitiEventListener;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class TaskAssignedListener implements ActivitiEventListener {
 			String taskname = (String) taskEntity.getVariable("title");
 			User user = userService.find(Long.parseLong(taskEntity.getAssignee()));
 			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("taskname", taskname);
+			map.put("taskname", StringUtils.isBlank(taskname)?"没有设置任务标题":taskname);
 			map.put("username", user.getChinesename());
 			map.put("phone", user.getUsername());
 			log.info("任务监听：{}收到一条待办任务，taskid{}",user.getChinesename(),taskEntity.getId());
