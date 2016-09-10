@@ -48,6 +48,7 @@
                     <input type="text" name='username' class="form-control uname" placeholder="用户名" />
                     <input type="password" name='password' class="form-control pword m-b" placeholder="密码" />
                     <span style="color: red;">${tip }</span>
+                    <input type="hidden" name="rememberMe" value="true"/>
                     <button class="btn btn-success btn-block">登录</button>
                 </form>
             </div>
