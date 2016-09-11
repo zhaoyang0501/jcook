@@ -28,6 +28,12 @@ public class MyRealm extends AuthorizingRealm {
 	@Autowired
 	private UserService userService; 
 	
+	  @Override
+	    public boolean supports(AuthenticationToken token) {
+	    	log.info("supports1_"+token);
+	        return token instanceof UsernamePasswordToken;//表示此Realm只支持OAuth2Token类型
+	    }
+	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String currentUsername = (String) super.getAvailablePrincipal(principals);
@@ -56,7 +62,7 @@ public class MyRealm extends AuthorizingRealm {
     	log.info("user{},password {}login",token.getUsername(),token.getPassword());
         User user=userService.findByUsername(token.getUsername());
         if(user!=null){
-        	 AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(), user.getUsername());  
+        	 AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(), getName());  
         	 SecurityUtils.getSubject().getSession().setAttribute("currentUser", user);
              return authcInfo;  
         }else{

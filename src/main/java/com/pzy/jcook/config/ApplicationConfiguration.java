@@ -6,6 +6,8 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.pzy.jcook.workflow.listener.SessionTimeOutListener;
+
 @Configuration
 public class ApplicationConfiguration {
 	@Bean
@@ -14,5 +16,9 @@ public class ApplicationConfiguration {
         factory.setMaxFileSize("50MB");
         factory.setMaxRequestSize("50MB");
         return factory.createMultipartConfig();
+    }
+	@Bean
+    public SessionTimeOutListener sessionTimeOutListener() {
+        return new SessionTimeOutListener();
     }
 }

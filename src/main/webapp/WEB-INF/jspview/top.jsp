@@ -46,7 +46,7 @@
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="${pageContext.request.contextPath}/assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
-									<small>欢迎,</small>
+									<small>欢 ee迎,${currentUser.chinesename }</small>
 									${currentUser.chinesename }
 								</span>
 

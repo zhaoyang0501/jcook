@@ -9,8 +9,9 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<description>Shiro权限控制</description>
 	<!-- 缓存管理器 -->
-	<bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
-	
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
 	<!-- 用户md5密码验证 -->
 	<bean id="credentialsMatcher" class="com.pzy.jcook.sys.shiro.CustomCredentialsMatcher"/>  
 
@@ -22,7 +23,7 @@
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg value="sid"/>
         <property name="httpOnly" value="true"/>
-        <property name="maxAge" value="-1"/>
+        <property name="maxAge" value="2592000"/><!-- 30天 -->
     </bean>
 
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -45,23 +46,35 @@
         <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
     </bean>
 
+	
+	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
+        <property name="sessionValidationInterval" value="1800000000"/>
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
 
     <!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="globalSessionTimeout" value="1800000"/>
+        <property name="globalSessionTimeout" value="1800000000"/>
         <property name="deleteInvalidSessions" value="true"/>
-        <property name="sessionValidationSchedulerEnabled" value="false"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
         <property name="sessionDAO" ref="sessionDAO"/>
         <property name="sessionIdCookieEnabled" value="true"/>
         <property name="sessionIdCookie" ref="sessionIdCookie"/>
-    </bean>	
+    </bean>
 	
 	
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		 <property name="realm" ref="myRealm" />
+		
+		<property name="realms">
+		<list>
+			<ref bean="myRealm"/>
+			<ref bean="oAuth2Realm"/>
+		</list>
+        </property>
 		  <property name="sessionManager" ref="sessionManager"/>
 		 <property name="rememberMeManager" ref="rememberMeManager"/>
-        <property name="cacheManager" ref="shiroCacheManager"/>
+        <property name="cacheManager" ref="cacheManager"/>
 	</bean>
 	
 	 <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
@@ -102,8 +115,7 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login" />
-		<property name="successUrl" value="/index" />
-		<property name="unauthorizedUrl" value="/login" />
+		<property name="unauthorizedUrl" value="/fuckyou" />
 		<property name="filters">
             <util:map>
                 <entry key="oauth2Authc" value-ref="oAuth2AuthenticationFilter"/>
@@ -111,14 +123,22 @@
         </property>
 		<property name="filterChainDefinitions">
 			<value>
-				  /login=authc
-				  /=authc
+				 <!-- /login=authc
 				  /loginout=logout
 				  /gologin=authc
-				  /index=authc
+				  /index=oauth2Authc
 				   /workflow/**=authc
 				  /workitem/**=oauth2Authc
-				  /user/**=authc
+				  /user/**=authc  -->
+				  
+				  /login=authc
+				 / = anon
+                /oauth2Failure.jsp = anon
+                /workitem/**=oauth2Authc
+              /workflow/**=authc
+                /logout = logout
+               
+                
 			</value>
 		</property>
 	</bean>

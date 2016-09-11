@@ -5,7 +5,9 @@ import java.io.IOException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -13,8 +15,11 @@ import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import com.pzy.jcook.sys.entity.User;
+import com.pzy.jcook.sys.service.UserService;
 import com.pzy.jcook.sys.shiro.MyRealm;
 
 /**
@@ -35,7 +40,10 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
     private String responseType = "code";
 
     private String failureUrl;
-
+    
+    @Autowired
+    private UserService userservice;
+    
     public void setAuthcCodeParam(String authcCodeParam) {
         this.authcCodeParam = authcCodeParam;
     }
@@ -80,28 +88,36 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
         }
 
         Subject subject = getSubject(request, response);
+        
         if(!subject.isAuthenticated()) {
-            if(StringUtils.isEmpty(request.getParameter(authcCodeParam))) {
-                //如果用户没有身份验证，且没有auth code，则重定向到服务端授权
-                saveRequestAndRedirectToLogin(request, response);
-                return false;
+            if(!StringUtils.isEmpty(request.getParameter(authcCodeParam))) {
+            	 log.info("executeLogin____________");
+                 return executeLogin(request, response);
             }
+            
         }
-        log.info("executeLogin____________");
-        return executeLogin(request, response);
+        return true;
     }
 
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request,
                                      ServletResponse response) throws Exception {
-        issueSuccessRedirect(request, response);
-        return false;
+    	
+		log.info("index----------isAuthenticated------------"+SecurityUtils.getSubject().isAuthenticated());
+    	User user = (User)SecurityUtils.getSubject().getSession().getAttribute("currentUser");
+    	 log.info("onLoginSuccess----------oauth2-----------inde get---"+user);
+    	 HttpServletResponse p =(HttpServletResponse)response;
+    	 HttpServletRequest r =(HttpServletRequest)request;
+    	// p.sendRedirect(r.getContextPath()+"/workflow/tasktodo");
+    	  issueSuccessRedirect(request, response);
+         return false;
     }
 
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException ae, ServletRequest request,
                                      ServletResponse response) {
-        Subject subject = getSubject(request, response);
+    	 log.info("executeLogin____________");
+    	Subject subject = getSubject(request, response);
         if (subject.isAuthenticated() || subject.isRemembered()) {
             try {
                 issueSuccessRedirect(request, response);
