@@ -57,12 +57,11 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = {"/","","index"}, method = RequestMethod.GET)
-	public String  index(HttpSession session,Model model) {
+	public String  index(Model model) {
 		Subject subject = SecurityUtils.getSubject();
 		 log.info("index----------isAuthenticated------------"+subject.isAuthenticated());
 		 User user = (User)SecurityUtils.getSubject().getSession().getAttribute("currentUser");
     	 log.info("index----------oauth2-----------inde get---"+user);
-    	 log.info("index---------oauth2 in session-----------inde get---"+((User)session.getAttribute("currentUser")));
 		return "index";
 	}
 }

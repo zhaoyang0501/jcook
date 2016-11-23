@@ -19,6 +19,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,7 @@ import com.pzy.jcook.dto.json.Response;
 import com.pzy.jcook.dto.json.SuccessResponse;
 import com.pzy.jcook.sys.entity.User;
 import com.pzy.jcook.sys.service.UserService;
+import com.pzy.jcook.sys.shiro.oauth2.OAuth2AuthenticationFilter;
 import com.pzy.jcook.workflow.dto.WorkItemDTO;
 import com.pzy.jcook.workflow.entity.Workitem;
 import com.pzy.jcook.workflow.service.WorkFlowService;
@@ -53,7 +56,8 @@ import com.pzy.jcook.workflow.service.WorkitemService;
 @Controller
 @RequestMapping("workitem")
 public class WorkitemController {
-
+	private static final Logger log = LoggerFactory.getLogger(WorkitemController.class);
+	
 	@Autowired
 	WorkitemService workitemService;
 	
@@ -73,6 +77,10 @@ public class WorkitemController {
 	
 	@RequestMapping(value="create",method=RequestMethod.GET)
 	public String create(Model model) {
+		log.info("create----------isAuthenticated------------"+SecurityUtils.getSubject().isAuthenticated());
+    	 User user = (User)SecurityUtils.getSubject().getSession().getAttribute("currentUser");
+    	 log.info("create----------oauth2-----------inde get---"+user);
+    	 
 		model.addAttribute("users",userService.findAll());
 		return  "workitem/create";
 	}

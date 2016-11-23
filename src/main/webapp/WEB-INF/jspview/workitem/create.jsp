@@ -33,15 +33,17 @@
 		<script src="${pageContext.request.contextPath}/assets/js/html5shiv.min.js"></script>
 		<script src="${pageContext.request.contextPath}/assets/js/respond.min.js"></script>
 		<![endif]-->
-	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/plugins/chosen/chosen.css" rel="stylesheet">
+	  <link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+      <link href="${pageContext.request.contextPath}/css/plugins/chosen/chosen.css" rel="stylesheet">
       <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
       <link href="${pageContext.request.contextPath}/css/plugins/webuploader/webuploader.css" rel="stylesheet">
+     
       <style type="text/css">
       .error{
        color: red;
       }
       </style>
+      
 	</head>
 
 	<body class="no-skin">
