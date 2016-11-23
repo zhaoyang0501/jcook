@@ -21,21 +21,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
  */
 @Configuration
 public class DruidConfiguration {
-	@Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(new WebStatFilter());
-        filterRegistrationBean.addUrlPatterns("/*");
-        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
-        return filterRegistrationBean;
-    }
-	@Bean
-    public ServletRegistrationBean druidServlet() {
-    	 ServletRegistrationBean reg = new ServletRegistrationBean();
-         reg.setServlet(new StatViewServlet());
-         reg.addUrlMappings("/druid/*");
-         return reg;
-    }
+	
 	@Bean
     public DataSource druidDataSource(@Value("${spring.datasource.driverClassName}") String driver,
                                       @Value("${spring.datasource.url}") String url,

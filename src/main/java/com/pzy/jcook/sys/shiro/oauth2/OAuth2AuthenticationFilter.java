@@ -88,15 +88,16 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
         }
 
         Subject subject = getSubject(request, response);
-        
         if(!subject.isAuthenticated()) {
-            if(!StringUtils.isEmpty(request.getParameter(authcCodeParam))) {
-            	 log.info("executeLogin____________");
-                 return executeLogin(request, response);
+            if(StringUtils.isEmpty(request.getParameter(authcCodeParam))) {
+                //如果用户没有身份验证，且没有auth code，则重定向到服务端授权
+            	log.info("StringUtils.isEmpty(request.getParameter(authcCodeParam)________");
+            	saveRequestAndRedirectToLogin(request, response);
+                return false;
             }
-            
         }
-        return true;
+
+        return executeLogin(request, response);
     }
 
     @Override
@@ -106,10 +107,7 @@ public class OAuth2AuthenticationFilter extends AuthenticatingFilter {
 		log.info("index----------isAuthenticated------------"+SecurityUtils.getSubject().isAuthenticated());
     	User user = (User)SecurityUtils.getSubject().getSession().getAttribute("currentUser");
     	 log.info("onLoginSuccess----------oauth2-----------inde get---"+user);
-    	 HttpServletResponse p =(HttpServletResponse)response;
-    	 HttpServletRequest r =(HttpServletRequest)request;
-    	// p.sendRedirect(r.getContextPath()+"/workflow/tasktodo");
-    	  issueSuccessRedirect(request, response);
+    	 issueSuccessRedirect(request, response);
          return false;
     }
 

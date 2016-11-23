@@ -7,23 +7,38 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-	<description>Shiro权限控制</description>
-	<!-- 缓存管理器 -->
-	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+
+    <!-- 缓存管理器 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
     </bean>
-	<!-- 用户md5密码验证 -->
-	<bean id="credentialsMatcher" class="com.pzy.jcook.sys.shiro.CustomCredentialsMatcher"/>  
 
+   
 
-   <!-- 会话ID生成器 -->
+	<bean id="oAuth2Realm" class="com.pzy.jcook.sys.shiro.oauth2.OAuth2Realm">
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authenticationCache"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
+
+        <property name="clientId" value="c1ebe466-1cdc-4bd3-ab69-77c3561b9dee"/>
+        <property name="clientSecret" value="d8346ea2-6017-43ed-ad68-19c0f971738b"/>
+          <property name="accessTokenUrl" value="http://localhost:8080/shiro-example-chapter17-server/accessToken"/>
+        <property name="userInfoUrl" value="http://localhost:8080/shiro-example-chapter17-server/userInfo"/>
+        <property name="redirectUrl" value="http://localhost:7070/shiro-example-chapter17-client/oauth2-login"/>
+
+    </bean>
+    
+
+    <!-- 会话ID生成器 -->
     <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
 
     <!-- 会话Cookie模板 -->
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg value="sid"/>
         <property name="httpOnly" value="true"/>
-        <property name="maxAge" value="2592000"/><!-- 30天 -->
+        <property name="maxAge" value="-1"/>
     </bean>
 
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -46,15 +61,15 @@
         <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
     </bean>
 
-	
-	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
-        <property name="sessionValidationInterval" value="1800000000"/>
+    <!-- 会话验证调度器 -->
+    <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
+        <property name="sessionValidationInterval" value="1800000"/>
         <property name="sessionManager" ref="sessionManager"/>
     </bean>
 
     <!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="globalSessionTimeout" value="1800000000"/>
+        <property name="globalSessionTimeout" value="1800000"/>
         <property name="deleteInvalidSessions" value="true"/>
         <property name="sessionValidationSchedulerEnabled" value="true"/>
         <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
@@ -62,27 +77,27 @@
         <property name="sessionIdCookieEnabled" value="true"/>
         <property name="sessionIdCookie" ref="sessionIdCookie"/>
     </bean>
-	
-	
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		
-		<property name="realms">
-		<list>
-			<ref bean="myRealm"/>
-			<ref bean="oAuth2Realm"/>
-		</list>
-        </property>
-		  <property name="sessionManager" ref="sessionManager"/>
-		 <property name="rememberMeManager" ref="rememberMeManager"/>
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="oAuth2Realm"/>
+        <property name="sessionManager" ref="sessionManager"/>
         <property name="cacheManager" ref="cacheManager"/>
-	</bean>
-	
-	 <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+    </bean>
+
+    <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
         <property name="arguments" ref="securityManager"/>
     </bean>
-	
-	<!-- 处理认证 授权 -->
+
+    <!-- OAuth2身份验证过滤器 -->
+    <bean id="oAuth2AuthenticationFilter" class="com.pzy.jcook.sys.shiro.oauth2.OAuth2AuthenticationFilter">
+        <property name="authcCodeParam" value="code"/>
+        <property name="failureUrl" value="/oauth2Failure.jsp"/>
+    </bean>
+
 	<bean id="myRealm" class="com.pzy.jcook.sys.shiro.MyRealm" >
 		<property name="credentialsMatcher" ref="credentialsMatcher"/>  
 		<property name="cachingEnabled" value="true"/>  
@@ -91,62 +106,35 @@
     	<property name="authorizationCacheName" value="authorizationCache"/>   
 	</bean>
 	
-	<!--oAuth2Realm Realm实现 -->
-    <bean id="oAuth2Realm" class="com.pzy.jcook.sys.shiro.oauth2.OAuth2Realm">
-        <property name="cachingEnabled" value="true"/>
-        <property name="authenticationCachingEnabled" value="true"/>
-        <property name="authenticationCacheName" value="authenticationCache"/>
-        <property name="authorizationCachingEnabled" value="true"/>
-        <property name="authorizationCacheName" value="authorizationCache"/>
-
-        <property name="clientId" value="wxa34b86e23638e4b4"/>
-        <property name="clientSecret" value="81e85a579300a2555b2e3be041e97933"/>
-        <property name="accessTokenUrl" value="https://api.weixin.qq.com/sns/oauth2/access_token"/>
-        <property name="userInfoUrl" value="https://api.weixin.qq.com/sns/userinfo"/>
-        <property name="redirectUrl" value="/oauth2-login"/>
-    </bean>
+	<bean id="credentialsMatcher" class="com.pzy.jcook.sys.shiro.CustomCredentialsMatcher"/>  
 	
-	
-	<bean id="oAuth2AuthenticationFilter" class="com.pzy.jcook.sys.shiro.oauth2.OAuth2AuthenticationFilter">
-        <property name="authcCodeParam" value="code"/>
-        <property name="failureUrl" value="/oauth2Failure.jsp"/>
-    </bean>
-    
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/login" />
-		<property name="unauthorizedUrl" value="/fuckyou" />
-		<property name="filters">
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="http://localhost:8080/shiro-example-chapter17-server/authorize?client_id=c1ebe466-1cdc-4bd3-ab69-77c3561b9dee&amp;response_type=code&amp;redirect_uri=http://localhost:8080/shiro-example-chapter17-client/oauth2-login"/>
+        <property name="filters">
             <util:map>
                 <entry key="oauth2Authc" value-ref="oAuth2AuthenticationFilter"/>
             </util:map>
         </property>
-		<property name="filterChainDefinitions">
-			<value>
-				 <!-- /login=authc
-				  /loginout=logout
-				  /gologin=authc
-				  /index=oauth2Authc
-				   /workflow/**=authc
-				  /workitem/**=oauth2Authc
-				  /user/**=authc  -->
-				  
-				  /login=authc
-				 / = anon
+        <property name="filterChainDefinitions">
+            <value>
+                / = anon
                 /oauth2Failure.jsp = anon
-                /workitem/**=oauth2Authc
-              /workflow/**=authc
+                /workitem/**= oauth2Authc
+                /workflow/**=authc
                 /logout = logout
-               
-                
-			</value>
-		</property>
-	</bean>
+            </value>
+        </property>
+    </bean>
 
-	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
-	
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
-		<property name="proxyTargetClass" value="true" />
-	</bean>
-  
+    <!-- Shiro生命周期处理器-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
 </beans>
+
+
+
+
+
+

@@ -28,11 +28,11 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_91">
+	<classpathentry kind="lib" path="D:/Documents/Downloads/sdk-java-2016-06-07/taobao-sdk-java-auto_1455552377940-20160607.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Documents/Downloads/sdk-java-2016-06-07/taobao-sdk-java-auto_1455552377940-20160607.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
